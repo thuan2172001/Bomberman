@@ -25,8 +25,11 @@ public abstract class Explosion extends Entity {
         Horizontal(Point2D.Float position, int firepower, boolean pierce) {
             super(position);
 
+            // tính tọa độ nổ tối đa bên trái (độ dài vật thể -32 px)
             float leftX = this.checkHorizontal(this.position, firepower, pierce, -32);
+            // tính tọa độ nổ tối đa bên phải (độ dài vật thể 32 px)
             float rightX = this.checkHorizontal(this.position, firepower, pierce, 32);
+
             this.centerOffset = position.x - leftX; // The offset is used to draw the center explosionContact sprite
 
             Rectangle2D.Float recH = new Rectangle2D.Float(leftX, this.position.y, rightX - leftX + 32, 32);
@@ -42,27 +45,27 @@ public abstract class Explosion extends Entity {
          * @param position Vị trí
          * @param firepower Sức nổ
          * @param blockWidth Kích thước đối tượng có thể nổ (tile object), âm cho trái, dương cho phải
-         * @return Position of the explosionContact's maximum range in horizontal direction
+         * @return Vị trí độ dài bom nổ tối đa theo chiều ngang
          */
-        private float checkHorizontal(Point2D.Float position, int firepower, boolean pierce, int blockWidth) {
-            float value = position.x;   // Start at the origin tile
+        private float checkHorizontal(Point2D.Float position, int firepower, boolean pierce, int blockWidth) { float value = position.x;   // Khởi tạo vị trí bomb
 
-            outer: for (int i = 1; i <= firepower; i++) {
-                // Expand one tile at a time
+           for (int i = 1; i <= firepower; i++) {
+                // tăng 1 ô 1 lần
                 value += blockWidth;
 
                 // Check this tile for wall collision
                 for (int index = 0; index < GameObjectCollection.tileObjects.size(); index++) {
                     TileObject obj = GameObjectCollection.tileObjects.get(index);
+                    // kiểm tra đường đi chứa vật thể không
                     if (obj.collider.contains(value, position.y)) {
                         if (!obj.isBreakable()) {
-                            // Hard wall found, move value back to the tile before
+                            // Vật thể rắn được thấy, value giảm lại 1 ô
                             value -= blockWidth;
                         }
 
-                        // Stop checking for tile objects after the first breakable is found
+                        // Kiểm tra khả năng xuyên, không có thì dừng tăng độ dài vì đâm vào vật thể
                         if (!pierce) {
-                            break outer;
+                            return value;
                         }
                     }
                 }
@@ -115,7 +118,7 @@ public abstract class Explosion extends Entity {
     }
 
     /**
-     * Vertical explosionContact class.
+     * Nổ dọc
      */
     public static class Vertical extends Explosion {
 
@@ -127,9 +130,11 @@ public abstract class Explosion extends Entity {
          */
         Vertical(Point2D.Float position, int firepower, boolean pierce) {
             super(position);
-
+            // tính tọa độ nổ tối đa bên trên (độ cao vật thể -32 px)
             float topY = this.checkVertical(this.position, firepower, pierce, -32);
+            // tính tọa độ nổ tối đa bên dưới (độ cao vật thể 32 px)
             float bottomY = this.checkVertical(this.position, firepower, pierce, 32);
+
             this.centerOffset = position.y - topY;  // The offset is used to draw the center explosionContact sprite
 
             Rectangle2D.Float recV = new Rectangle2D.Float(this.position.x, topY, 32, bottomY - topY + 32);
@@ -148,24 +153,24 @@ public abstract class Explosion extends Entity {
          * @return Position of the explosionContact's maximum range in vertical direction
          */
         private float checkVertical(Point2D.Float position, int firepower, boolean pierce, int blockHeight) {
-            float value = position.y;   // Start at the origin tile
+            float value = position.y;   // Khởi tạo tại vị trí bomb
 
-            outer: for (int i = 1; i <= firepower; i++) {
-                // Expand one tile at a time
+            for (int i = 1; i <= firepower; i++) {
+                // Lan 1 ô mỗi lượt
                 value += blockHeight;
 
-                // Check this tile for wall collision
+                // Kiểm tra va chạm vật thể
                 for (int index = 0; index < GameObjectCollection.tileObjects.size(); index++) {
                     TileObject obj = GameObjectCollection.tileObjects.get(index);
                     if (obj.collider.contains(position.x, value)) {
                         if (!obj.isBreakable()) {
-                            // Hard wall found, move value back to the tile before
+                            // Tường cứng, value giảm lại 1
                             value -= blockHeight;
                         }
 
-                        // Stop checking for tile objects after the first breakable is found
+                        // Kiểm tra khả năng xuyên, k xuyên thì k cần kiểm tra va chạm nữa, xuyên thì ktra tiếp
                         if (!pierce) {
-                            break outer;
+                            return value;
                         }
                     }
                 }
@@ -218,7 +223,7 @@ public abstract class Explosion extends Entity {
     }
 
 
-    // --- BASE CLASS ---
+    // --- Lớp Explosion ---
 
     protected BufferedImage[][] sprites;
     protected BufferedImage[] animation;
@@ -228,7 +233,7 @@ public abstract class Explosion extends Entity {
 
     /**
      * Constructor called in horizontal and vertical constructors.
-     * @param position Coordinates of this object in the game world
+     * @param position Vị trí
      */
     Explosion(Point2D.Float position) {
         super(position);

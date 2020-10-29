@@ -23,7 +23,8 @@ public class ResourceCollection {
         POWER_SPEED,
         POWER_PIERCE,
         POWER_KICK,
-        POWER_TIMER;
+        POWER_TIMER,
+        PORTAL;
 
         private BufferedImage image = null;
 
@@ -65,7 +66,7 @@ public class ResourceCollection {
     }
 
     /**
-     * Lấy đúng ô cho các bức tường cứng được chỉ định bằng phím kí hiệu.
+     * Lấy đúng hướng cho các bức tường cứng được chỉ định bằng phím kí hiệu (biến code);
      * @param key phím kí hiệu (file excel)
      * @return Một bức tường cứng riêng lẻ
      */
@@ -78,9 +79,8 @@ public class ResourceCollection {
      */
     public static void readFiles() {
         try {
-            System.out.println(System.getProperty("user.dir"));
             Images.ICON.image = ImageIO.read(ResourceCollection.class.getResource("/textures/icon.png"));
-            Images.BACKGROUND.image = ImageIO.read(ResourceCollection.class.getResource("/textures/bg.png"));
+            Images.BACKGROUND.image = ImageIO.read(ResourceCollection.class.getResource("/textures/grass.png"));
             Images.SOFT_WALL.image = ImageIO.read(ResourceCollection.class.getResource("/textures/softWall.png"));
             Images.POWER_BOMB.image = ImageIO.read(ResourceCollection.class.getResource("/textures/power_bomb.png"));
             Images.POWER_FIREUP.image = ImageIO.read(ResourceCollection.class.getResource("/textures/power_fireup.png"));
@@ -89,11 +89,10 @@ public class ResourceCollection {
             Images.POWER_PIERCE.image = ImageIO.read(ResourceCollection.class.getResource("/textures/power_pierce.png"));
             Images.POWER_KICK.image = ImageIO.read(ResourceCollection.class.getResource("/textures/power_kick.png"));
             Images.POWER_TIMER.image = ImageIO.read(ResourceCollection.class.getResource("/textures/power_timer.png"));
+            Images.PORTAL.image = ImageIO.read(ResourceCollection.class.getResource("/textures/portal.png"));
 
             SpriteMaps.PLAYER_1.image = ImageIO.read(ResourceCollection.class.getResource("/textures/bomber1.png"));
             SpriteMaps.PLAYER_2.image = ImageIO.read(ResourceCollection.class.getResource("/textures/bomber2.png"));
-            SpriteMaps.PLAYER_3.image = ImageIO.read(ResourceCollection.class.getResource("/textures/bomber3.png"));
-            SpriteMaps.PLAYER_4.image = ImageIO.read(ResourceCollection.class.getResource("/textures/bomber4.png"));
             SpriteMaps.HARD_WALLS.image = ImageIO.read(ResourceCollection.class.getResource("/textures/hardWalls.png"));
             SpriteMaps.BOMB.image = ImageIO.read(ResourceCollection.class.getResource("/textures/bomb.png"));
             SpriteMaps.BOMB_PIERCE.image = ImageIO.read(ResourceCollection.class.getResource("/textures/bomb_pierce.png"));
@@ -112,8 +111,6 @@ public class ResourceCollection {
     public static void init() {
         SpriteMaps.PLAYER_1.sprites = sliceSpriteMap(SpriteMaps.PLAYER_1.image, 32, 48);
         SpriteMaps.PLAYER_2.sprites = sliceSpriteMap(SpriteMaps.PLAYER_2.image, 32, 48);
-        SpriteMaps.PLAYER_3.sprites = sliceSpriteMap(SpriteMaps.PLAYER_3.image, 32, 48);
-        SpriteMaps.PLAYER_4.sprites = sliceSpriteMap(SpriteMaps.PLAYER_4.image, 32, 48);
         SpriteMaps.HARD_WALLS.sprites = sliceSpriteMap(SpriteMaps.HARD_WALLS.image, 32, 32);
         SpriteMaps.BOMB.sprites = sliceSpriteMap(SpriteMaps.BOMB.image, 32, 32);
         SpriteMaps.BOMB_PIERCE.sprites = sliceSpriteMap(SpriteMaps.BOMB_PIERCE.image, 32, 32);

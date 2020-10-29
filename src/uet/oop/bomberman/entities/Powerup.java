@@ -62,7 +62,15 @@ public class Powerup extends TileObject {
             protected void grantBonus(Bomber bomber) {
                 bomber.reduceTimer(15);
             }
-        };
+        },
+
+        Portal(ResourceCollection.Images.PORTAL.getImage()) {
+            @Override
+            protected void grantBonus(Bomber bomber) {
+                bomber.nextMap(1);
+            }
+        }
+        ;
 
         private BufferedImage sprite;
 
@@ -101,7 +109,8 @@ public class Powerup extends TileObject {
     private static Powerup.Type[] powerups = Powerup.Type.values();
     private static Random random = new Random();
     static final Powerup.Type randomPower() {
-        return powerups[random.nextInt(powerups.length)];
+        // if(quái chết hết) return powerups[powerups.length - 1]; // tạo ra PORTAL
+        return powerups[random.nextInt(powerups.length - 1)]; // không random ra PORTAL
     }
 
     /**

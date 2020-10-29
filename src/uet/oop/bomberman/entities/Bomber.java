@@ -26,6 +26,7 @@ public class Bomber extends Player {
     private int bombTimer; //thời gian bomb nổ, khởi tạo mặc định là 250, tối thiểu là 160
     private boolean pierce;
     private boolean kick;
+    private int level;
 
     /**
      * Tạo người đặt bom ở vị trí position với hoạt ảnh là mảng 2 chiều
@@ -129,6 +130,12 @@ public class Bomber extends Player {
         System.out.print("Thời gian bomb hiện tại: " + this.bombTimer);
         this.bombTimer = Math.max(160, this.bombTimer - value);
         System.out.println(" thành: " + this.bombTimer);
+    }
+    public void nextMap(int value) {
+        System.out.print("Level hiện tại: " + this.level);
+        if (this.level < 3) this.level++;
+        else this.level = 0;
+        System.out.println(" thành: " + this.level);
     }
 
     /**

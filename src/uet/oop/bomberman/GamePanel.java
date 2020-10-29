@@ -16,7 +16,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 
 /**
- * JPanel that contains the entire game and game loop logic.
+ * JPanel chứa toàn bộ trò chơi và logic vòng lặp trò chơi.
  */
 public class GamePanel extends JPanel implements Runnable {
 
@@ -40,14 +40,12 @@ public class GamePanel extends JPanel implements Runnable {
 
     private HashMap<Integer, Key> controls1;
     private HashMap<Integer, Key> controls2;
-    private HashMap<Integer, Key> controls3;
-    private HashMap<Integer, Key> controls4;
 
     private static final double SOFTWALL_RATE = 0.825;
 
     /**
-     * Construct game panel and load in a map file.
-     * @param filename Name of the map file
+     * Khởi tạo bảng điều khiển trò chơi và tải trong một tệp bản đồ.
+     * @param filename tên file
      */
     GamePanel(String filename) {
         this.setFocusable(true);
@@ -59,7 +57,7 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     /**
-     * Initialize the game panel with a HUD, window size, collection of game objects, and start the game loop.
+     * Khởi tạo bảng điều khiển trò chơi với giao diện người dùng, kích thước cửa sổ, mảng các đối tượng trò chơi và bắt đầu vòng lặp trò chơi.
      */
     void init() {
         this.resetDelay = 0;
@@ -73,21 +71,20 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     /**
-     * Loads the map file into buffered reader or load default map when no file is given.
-     * The file should be a file with strings separated by commas ",". Preferred .csv file.
-     * @param mapFile Name of the map file
+     * Đọc file, nếu file k đọc đc thì mặc định map default.
+     * Dùng excel tên file.csv
+     * @param mapFile Tên file bản đồ
      */
     private void loadMapFile(String mapFile) {
-        // Loading map file
         try {
             this.bufferedReader = new BufferedReader(new FileReader(mapFile));
         } catch (IOException | NullPointerException e) {
             // Load default map when map file could not be loaded
-            System.err.println(e + ": Cannot load map file, loading default map");
+            System.err.println(e + ": Không đọc được file, map mặc định");
             this.bufferedReader = new BufferedReader(ResourceCollection.Files.DEFAULT_MAP.getFile());
         }
 
-        // Parsing map data from file
+        // Phân tích cú pháp dữ liệu từ tệp bản đồ
         this.mapLayout = new ArrayList<>();
         try {
             String currentLine;
@@ -99,17 +96,17 @@ public class GamePanel extends JPanel implements Runnable {
                 mapLayout.add(new ArrayList<>(Arrays.asList(currentLine.split(","))));
             }
         } catch (IOException | NullPointerException e) {
-            System.out.println(e + ": Error parsing map data");
+            System.out.println(e + ": Lỗi phân tích cú pháp bản đồ");
             e.printStackTrace();
         }
     }
 
     /**
-     * Generate the map given the map file. The map is grid based and each tile is 32x32.
-     * Create game objects depending on the string.
+     * Tạo bản đồ cho tệp bản đồ. Bản đồ dạng lưới và mỗi ô có kích thước 32x32.
+     * Tạo các đối tượng trò chơi tùy thuộc vào kí tự trong file.
      */
     private void generateMap() {
-        // Map dimensions
+        // Kích thước map
         this.mapWidth = mapLayout.get(0).size();
         this.mapHeight = mapLayout.size();
         panelWidth = this.mapWidth * 32;
@@ -117,7 +114,7 @@ public class GamePanel extends JPanel implements Runnable {
 
         this.world = new BufferedImage(this.mapWidth * 32, this.mapHeight * 32, BufferedImage.TYPE_INT_RGB);
 
-        // Generate entire map
+        // tạo toàn bộ map
         for (int y = 0; y < this.mapHeight; y++) {
             for (int x = 0; x < this.mapWidth; x++) {
                 switch (mapLayout.get(y).get(x)) {
@@ -130,19 +127,19 @@ public class GamePanel extends JPanel implements Runnable {
                         break;
 
                     case ("H"):     // Hard wall; unbreakable
-                        // Code used to choose tile based on adjacent tiles
+                        // biến code sử dụng để chọn hướng gạch dựa trên các ô liền kề
                         int code = 0;
                         if (y > 0 && mapLayout.get(y - 1).get(x).equals("H")) {
-                            code += 1;  // North
+                            code += 1;  // North-Bắc
                         }
                         if (y < this.mapHeight - 1 && mapLayout.get(y + 1).get(x).equals("H")) {
-                            code += 4;  // South
+                            code += 4;  // South-Nam
                         }
                         if (x > 0 && mapLayout.get(y).get(x - 1).equals("H")) {
-                            code += 8;  // West
+                            code += 8;  // West-Tây
                         }
                         if (x < this.mapWidth - 1 && mapLayout.get(y).get(x + 1).equals("H")) {
-                            code += 2;  // East
+                            code += 2;  // East-Đông
                         }
                         BufferedImage sprHardWall = ResourceCollection.getHardWallTile(code);
                         Wall hardWall = new Wall(new Point2D.Float(x * 32, y * 32), sprHardWall, false);
@@ -165,24 +162,6 @@ public class GamePanel extends JPanel implements Runnable {
                         this.addKeyListener(playerController2);
                         this.gameHUD.assignPlayer(player2, 1);
                         GameObjectCollection.spawn(player2);
-                        break;
-
-                    case ("3"):     // Player 3; Bomber
-                        BufferedImage[][] sprMapP3 = ResourceCollection.SpriteMaps.PLAYER_3.getSprites();
-                        Bomber player3 = new Bomber(new Point2D.Float(x * 32, y * 32 - 16), sprMapP3);
-                        PlayerController playerController3 = new PlayerController(player3, this.controls3);
-                        this.addKeyListener(playerController3);
-                        this.gameHUD.assignPlayer(player3, 2);
-                        GameObjectCollection.spawn(player3);
-                        break;
-
-                    case ("4"):     // Player 4; Bomber
-                        BufferedImage[][] sprMapP4 = ResourceCollection.SpriteMaps.PLAYER_4.getSprites();
-                        Bomber player4 = new Bomber(new Point2D.Float(x * 32, y * 32 - 16), sprMapP4);
-                        PlayerController playerController4 = new PlayerController(player4, this.controls4);
-                        this.addKeyListener(playerController4);
-                        this.gameHUD.assignPlayer(player4, 3);
-                        GameObjectCollection.spawn(player4);
                         break;
 
                     case ("PB"):    // Powerup Bomb
@@ -233,36 +212,21 @@ public class GamePanel extends JPanel implements Runnable {
     private void setControls() {
         this.controls1 = new HashMap<>();
         this.controls2 = new HashMap<>();
-        this.controls3 = new HashMap<>();
-        this.controls4 = new HashMap<>();
 
         // Set Player 1 controls
         this.controls1.put(KeyEvent.VK_UP, Key.up);
         this.controls1.put(KeyEvent.VK_DOWN, Key.down);
         this.controls1.put(KeyEvent.VK_LEFT, Key.left);
         this.controls1.put(KeyEvent.VK_RIGHT, Key.right);
-        this.controls1.put(KeyEvent.VK_SLASH, Key.action);
+        this.controls1.put(KeyEvent.VK_ENTER, Key.action);
 
         // Set Player 2 controls
         this.controls2.put(KeyEvent.VK_W, Key.up);
         this.controls2.put(KeyEvent.VK_S, Key.down);
         this.controls2.put(KeyEvent.VK_A, Key.left);
         this.controls2.put(KeyEvent.VK_D, Key.right);
-        this.controls2.put(KeyEvent.VK_E, Key.action);
+        this.controls2.put(KeyEvent.VK_J, Key.action);
 
-        // Set Player 3 controls
-        this.controls3.put(KeyEvent.VK_T, Key.up);
-        this.controls3.put(KeyEvent.VK_G, Key.down);
-        this.controls3.put(KeyEvent.VK_F, Key.left);
-        this.controls3.put(KeyEvent.VK_H, Key.right);
-        this.controls3.put(KeyEvent.VK_Y, Key.action);
-
-        // Set Player 4 controls
-        this.controls4.put(KeyEvent.VK_I, Key.up);
-        this.controls4.put(KeyEvent.VK_K, Key.down);
-        this.controls4.put(KeyEvent.VK_J, Key.left);
-        this.controls4.put(KeyEvent.VK_L, Key.right);
-        this.controls4.put(KeyEvent.VK_O, Key.action);
     }
 
     /**
@@ -419,11 +383,9 @@ public class GamePanel extends JPanel implements Runnable {
         }
 
         // Draw HUD
-        int infoBoxWidth = panelWidth / 4;
+        int infoBoxWidth = panelWidth / 2;
         g2.drawImage(this.gameHUD.getP1info(), infoBoxWidth * 0, 0, null);
         g2.drawImage(this.gameHUD.getP2info(), infoBoxWidth * 1, 0, null);
-        g2.drawImage(this.gameHUD.getP3info(), infoBoxWidth * 2, 0, null);
-        g2.drawImage(this.gameHUD.getP4info(), infoBoxWidth * 3, 0, null);
 
         // Draw game world offset by the HUD
         g2.drawImage(this.world, 0, GameWindow.HUD_HEIGHT, null);
@@ -469,17 +431,18 @@ class GameController implements KeyListener {
         if (e.getKeyCode() == KeyEvent.VK_F1) {
             System.out.println("F1 key pressed: Displaying help");
 
-            String[] columnHeaders = { "", "White", "Black", "Red", "Blue" };
+            String[] columnHeaders = { "", "Red", "Blue"};
             Object[][] controls = {
-                    {"Up", "Up", "W", "T", "I"},
-                    {"Down", "Down", "S", "G", "K"},
-                    {"Left", "Left", "A", "F", "J"},
-                    {"Right", "Right", "D", "H", "L"},
-                    {"Bomb", "/", "E", "Y", "O"},
-                    {"", "", "", "", ""},
-                    {"Help", "F1", "", "", ""},
-                    {"Reset", "F5", "", "", ""},
-                    {"Exit", "ESC", "", "", ""} };
+                    {"Up", "Up", "W"},
+                    {"Down", "Down", "S"},
+                    {"Left", "Left", "A"},
+                    {"Right", "Right", "D"},
+                    {"Bomb", "ENTER", "J"},
+                    {"", "", ""},
+                    {"Help", "F1", ""},
+                    {"Reset", "F5", ""},
+                    {"Exit", "ESC", ""}
+            };
 
             JTable controlsTable = new JTable(controls, columnHeaders);
             JTableHeader tableHeader = controlsTable.getTableHeader();

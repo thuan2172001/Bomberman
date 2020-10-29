@@ -156,9 +156,8 @@ public class Bomb extends TileObject {
     }
 
     /**
-     * Bombs are immediately destroyed when colliding with explosionContact.
-     * This is a different behavior than powerups and walls since they are not destroyed until the explosionContact animation finishes.
-     * @param collidingObj Explosion that will detonate this bomb
+     * Bomb va chạm với vụ nổ.
+     * Nổ ngay lập tức
      */
     @Override
     public void handleCollision(Explosion collidingObj) {
