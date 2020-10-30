@@ -56,7 +56,7 @@ public class ResourceCollection {
     }
 
     public enum Files {
-        DEFAULT_MAP;
+        MAP1, MAP2, MAP3, MAP4, MAP5, MAP6, MAP7, MAP8, MAP9, MAP10;
 
         private InputStreamReader file = null;
 
@@ -98,7 +98,18 @@ public class ResourceCollection {
             SpriteMaps.BOMB_PIERCE.image = ImageIO.read(ResourceCollection.class.getResource("/textures/bomb_pierce.png"));
             SpriteMaps.EXPLOSION_SPRITEMAP.image = ImageIO.read(ResourceCollection.class.getResource("/textures/explosion.png"));
 
-            Files.DEFAULT_MAP.file = new InputStreamReader(ResourceCollection.class.getResourceAsStream("/textures/default.csv"));
+            Files.MAP1.file = new InputStreamReader(ResourceCollection.class.getResourceAsStream("/textures/maps/level10.csv"));
+            Files.MAP2.file = new InputStreamReader(ResourceCollection.class.getResourceAsStream("/textures/maps/level2.csv"));
+            Files.MAP3.file = new InputStreamReader(ResourceCollection.class.getResourceAsStream("/textures/maps/level3.csv"));
+            Files.MAP4.file = new InputStreamReader(ResourceCollection.class.getResourceAsStream("/textures/maps/level4.csv"));
+            Files.MAP5.file = new InputStreamReader(ResourceCollection.class.getResourceAsStream("/textures/maps/level5.csv"));
+            Files.MAP6.file = new InputStreamReader(ResourceCollection.class.getResourceAsStream("/textures/maps/level6.csv"));
+            Files.MAP7.file = new InputStreamReader(ResourceCollection.class.getResourceAsStream("/textures/maps/level7.csv"));
+            Files.MAP8.file = new InputStreamReader(ResourceCollection.class.getResourceAsStream("/textures/maps/level8.csv"));
+            Files.MAP9.file = new InputStreamReader(ResourceCollection.class.getResourceAsStream("/textures/maps/level9.csv"));
+            Files.MAP10.file = new InputStreamReader(ResourceCollection.class.getResourceAsStream("/textures/maps/level10.csv"));
+
+
         } catch (IOException e) {
             System.err.println(e + ": Không đọc được file ảnh");
             e.printStackTrace();

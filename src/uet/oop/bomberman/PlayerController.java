@@ -6,7 +6,7 @@ import java.awt.event.KeyListener;
 import java.util.HashMap;
 
 /**
- * This class controls a player object through user input by listening for key events.
+ * Lớp điều khiển nhân vật dựa vào key đầu vào
  */
 public class PlayerController implements KeyListener {
 
@@ -28,8 +28,8 @@ public class PlayerController implements KeyListener {
     }
 
     /**
-     * Reads the keys pressed and performs certain actions based on the key.
-     * @param e The key pressed
+     * Đọc key ấn vào và chuyển thành lệnh.
+     * @param e key pressed
      */
     @Override
     public void keyPressed(KeyEvent e) {
@@ -51,8 +51,8 @@ public class PlayerController implements KeyListener {
     }
 
     /**
-     * Reads the keys released and performs certain actions based on the key.
-     * @param e The key released
+     * Đọc key nhả ra và chuyển thành lệnh.
+     * @param e key
      */
     @Override
     public void keyReleased(KeyEvent e) {

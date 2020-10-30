@@ -13,12 +13,14 @@ public class GameHUD {
     private BufferedImage[] playerInfo;
     private int[] playerScore;
     boolean matchSet;
+    private int level;
 
     GameHUD() {
         this.players = new Bomber[2];
         this.playerInfo = new BufferedImage[2];
         this.playerScore = new int[2];
         this.matchSet = false;
+        this.level = 1;
     }
 
     void init() {
@@ -31,6 +33,9 @@ public class GameHUD {
         this.playerInfo[1] = new BufferedImage(infoWidth, height, BufferedImage.TYPE_INT_RGB);
     }
 
+    int getLevel() {
+        return level;
+    }
     /**
      * Used by game panel to draw player info to the screen
      * @return Player info box
@@ -70,7 +75,11 @@ public class GameHUD {
         if (deadPlayers == this.players.length - 1) {
             for (int i = 0; i < this.players.length; i++) {
                 if (!this.players[i].isDead()) {
-                    this.playerScore[i]++;
+                    this.playerScore[i] += 200;
+
+                    // level
+                    level++;
+
                     this.matchSet = true;
                 }
             }
@@ -107,7 +116,12 @@ public class GameHUD {
             // Draw score
             playerGraphics[i].setFont(font);
             playerGraphics[i].setColor(Color.WHITE);
-            playerGraphics[i].drawString("" + this.playerScore[i], this.playerInfo[i].getWidth() / 2, 32);
+            playerGraphics[i].drawString("Score: " + this.playerScore[i],
+                    this.playerInfo[i].getWidth() / 2 - 140, 32);
+
+            playerGraphics[i].drawString("Level: " + this.level,
+                    this.playerInfo[i].getWidth() / 2 + 45, 32);
+
 
             // Dispose
             playerGraphics[i].dispose();

@@ -1,10 +1,14 @@
 package uet.oop.bomberman.entities;
 
+import javazoom.jl.player.Player;
+
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
+import java.io.FileInputStream;
+
 
 /**
  * Lớp cơ sở cho hai kiểu nổ: ngang và dọc.

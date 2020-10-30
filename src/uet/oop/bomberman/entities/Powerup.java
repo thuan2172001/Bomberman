@@ -67,7 +67,7 @@ public class Powerup extends TileObject {
         Portal(ResourceCollection.Images.PORTAL.getImage()) {
             @Override
             protected void grantBonus(Bomber bomber) {
-                bomber.nextMap(1);
+                System.out.println("map tang 1");
             }
         }
         ;

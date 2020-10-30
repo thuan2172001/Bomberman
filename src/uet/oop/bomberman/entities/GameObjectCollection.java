@@ -18,7 +18,6 @@ public class GameObjectCollection {
      */
     public static void init() {
         gameObjects = new ArrayList<>();
-
         tileObjects = new ArrayList<>();
         explosionObjects = new ArrayList<>();
         bomberObjects = new ArrayList<>();

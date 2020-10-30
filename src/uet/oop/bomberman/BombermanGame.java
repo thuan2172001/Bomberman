@@ -19,14 +19,9 @@ public class BombermanGame {
         ResourceCollection.init();
 
         GamePanel game;
-        try {
-            game = new GamePanel("B:\\bomberman-starter-starter-2\\maps\\cool_map.csv");
-        } catch (ArrayIndexOutOfBoundsException e) {
-            System.err.println(e + ": Program args not given");
-            game = new GamePanel(null);
-        }
-
+        game = new GamePanel();
         game.init();
+
         window = new GameWindow(game);
 
         System.gc();

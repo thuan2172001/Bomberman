@@ -11,6 +11,7 @@ import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -36,7 +37,8 @@ public class GamePanel extends JPanel implements Runnable {
     private int mapWidth;
     private int mapHeight;
     private ArrayList<ArrayList<String>> mapLayout;
-    private BufferedReader bufferedReader;
+    private ArrayList<ArrayList<ArrayList<String>>> mapArray;
+    private BufferedReader[] bufferedReader;
 
     private HashMap<Integer, Key> controls1;
     private HashMap<Integer, Key> controls2;
@@ -45,14 +47,13 @@ public class GamePanel extends JPanel implements Runnable {
 
     /**
      * Khởi tạo bảng điều khiển trò chơi và tải trong một tệp bản đồ.
-     * @param filename tên file
      */
-    GamePanel(String filename) {
+    GamePanel() {
         this.setFocusable(true);
         this.requestFocus();
         this.setControls();
         this.bg = ResourceCollection.Images.BACKGROUND.getImage();
-        this.loadMapFile(filename);
+        this.loadMapFile();
         this.addKeyListener(new GameController(this));
     }
 
@@ -63,7 +64,7 @@ public class GamePanel extends JPanel implements Runnable {
         this.resetDelay = 0;
         GameObjectCollection.init();
         this.gameHUD = new GameHUD();
-        this.generateMap();
+        this.generateMap(0);
         this.gameHUD.init();
         this.setPreferredSize(new Dimension(this.mapWidth * 32, (this.mapHeight * 32) + GameWindow.HUD_HEIGHT));
         System.gc();
@@ -73,31 +74,42 @@ public class GamePanel extends JPanel implements Runnable {
     /**
      * Đọc file, nếu file k đọc đc thì mặc định map default.
      * Dùng excel tên file.csv
-     * @param mapFile Tên file bản đồ
      */
-    private void loadMapFile(String mapFile) {
+    private void loadMapFile() {
         try {
-            this.bufferedReader = new BufferedReader(new FileReader(mapFile));
-        } catch (IOException | NullPointerException e) {
-            // Load default map when map file could not be loaded
-            System.err.println(e + ": Không đọc được file, map mặc định");
-            this.bufferedReader = new BufferedReader(ResourceCollection.Files.DEFAULT_MAP.getFile());
+            this.bufferedReader = new BufferedReader[10];
+            this.bufferedReader[0] = new BufferedReader(ResourceCollection.Files.MAP1.getFile());
+            this.bufferedReader[1] = new BufferedReader(ResourceCollection.Files.MAP2.getFile());
+            this.bufferedReader[2] = new BufferedReader(ResourceCollection.Files.MAP3.getFile());
+            this.bufferedReader[3] = new BufferedReader(ResourceCollection.Files.MAP4.getFile());
+            this.bufferedReader[4] = new BufferedReader(ResourceCollection.Files.MAP5.getFile());
+            this.bufferedReader[5] = new BufferedReader(ResourceCollection.Files.MAP6.getFile());
+            this.bufferedReader[6] = new BufferedReader(ResourceCollection.Files.MAP7.getFile());
+            this.bufferedReader[7] = new BufferedReader(ResourceCollection.Files.MAP8.getFile());
+            this.bufferedReader[8] = new BufferedReader(ResourceCollection.Files.MAP9.getFile());
+            this.bufferedReader[9] = new BufferedReader(ResourceCollection.Files.MAP10.getFile());
+        } catch (NullPointerException e) {
+            System.err.println(e + ": Không đọc được file");
         }
 
+        this.mapArray = new ArrayList<>();
         // Phân tích cú pháp dữ liệu từ tệp bản đồ
-        this.mapLayout = new ArrayList<>();
-        try {
-            String currentLine;
-            while ((currentLine = bufferedReader.readLine()) != null) {
-                if (currentLine.isEmpty()) {
-                    continue;
+        for (int i = 0; i < 10; i++) {
+            this.mapLayout = new ArrayList<>();
+            try {
+                String currentLine;
+                while ((currentLine = bufferedReader[i].readLine()) != null) {
+                    if (currentLine.isEmpty()) {
+                        continue;
+                    }
+                    // Split row into array of strings and add to array list
+                    mapLayout.add(new ArrayList<>(Arrays.asList(currentLine.split(","))));
                 }
-                // Split row into array of strings and add to array list
-                mapLayout.add(new ArrayList<>(Arrays.asList(currentLine.split(","))));
+            } catch (IOException | NullPointerException e) {
+                System.out.println(e + ": Lỗi phân tích cú pháp bản đồ");
+                e.printStackTrace();
             }
-        } catch (IOException | NullPointerException e) {
-            System.out.println(e + ": Lỗi phân tích cú pháp bản đồ");
-            e.printStackTrace();
+            mapArray.add(mapLayout);
         }
     }
 
@@ -105,8 +117,9 @@ public class GamePanel extends JPanel implements Runnable {
      * Tạo bản đồ cho tệp bản đồ. Bản đồ dạng lưới và mỗi ô có kích thước 32x32.
      * Tạo các đối tượng trò chơi tùy thuộc vào kí tự trong file.
      */
-    private void generateMap() {
+    private void generateMap(int id) {
         // Kích thước map
+        this.mapLayout = this.mapArray.get(id);
         this.mapWidth = mapLayout.get(0).size();
         this.mapHeight = mapLayout.size();
         panelWidth = this.mapWidth * 32;
@@ -199,6 +212,10 @@ public class GamePanel extends JPanel implements Runnable {
                         GameObjectCollection.spawn(powerTimer);
                         break;
 
+                    case ("P"):    // Portal
+                        Powerup portal = new Powerup(new Point2D.Float(x * 32, y * 32), Powerup.Type.Portal);
+                        GameObjectCollection.spawn(portal);
+                        break;
                     default:
                         break;
                 }
@@ -207,7 +224,7 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     /**
-     * Initialize default key bindings for all players.
+     * Tạo key điều khiển cho người chơi.
      */
     private void setControls() {
         this.controls1 = new HashMap<>();
@@ -230,25 +247,26 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     /**
-     * When ESC is pressed, close the game
+     * ESC tắt game
      */
     void exit() {
         this.running = false;
     }
 
     /**
-     * When F5 is pressed, reset game object collection, collect garbage, reinitialize game panel, reload map
+     * F5 chơi lại từ đầu
      */
     void resetGame() {
         this.init();
     }
 
     /**
-     * Reset only the map, keeping the score
+     * Reset map, điểm và level vẫn giữ.
      */
-    private void resetMap() {
+    private void resetMap(int id) {
+        int real_id = id % 10;
         GameObjectCollection.init();
-        this.generateMap();
+        this.generateMap(real_id);
         System.gc();
     }
 
@@ -343,7 +361,7 @@ public class GamePanel extends JPanel implements Runnable {
             // Checking size of array list because when a bomber dies, they do not immediately get deleted
             // This makes it so that the next round doesn't start until the winner is the only bomber object on the map
             if (GameObjectCollection.bomberObjects.size() <= 1) {
-                this.resetMap();
+                this.resetMap(this.gameHUD.getLevel() - 1);
                 this.gameHUD.matchSet = false;
             }
         }
@@ -352,7 +370,7 @@ public class GamePanel extends JPanel implements Runnable {
         this.resetDelay++;
 
         try {
-            Thread.sleep(1000 / 144);
+            Thread.sleep(500 / 144);
         } catch (InterruptedException ignored) {
         }
     }
@@ -374,12 +392,16 @@ public class GamePanel extends JPanel implements Runnable {
         }
 
         // Draw game objects
-        for (int i = 0; i < GameObjectCollection.gameObjects.size(); i++) {
-            for (int j = 0; j < GameObjectCollection.gameObjects.get(i).size(); j++) {
-                Entity obj = GameObjectCollection.gameObjects.get(i).get(j);
-                obj.drawImage(this.buffer);
+        try {
+            for (int i = 0; i < GameObjectCollection.gameObjects.size(); i++) {
+                for (int j = 0; j < GameObjectCollection.gameObjects.get(i).size(); j++) {
+                    Entity obj = GameObjectCollection.gameObjects.get(i).get(j);
+                    obj.drawImage(this.buffer);
 //                obj.drawCollider(this.buffer);
+                }
             }
+        } catch (Exception e) {
+            System.out.println("1 xiu bug");
         }
 
         // Draw HUD
@@ -397,15 +419,15 @@ public class GamePanel extends JPanel implements Runnable {
 }
 
 /**
- * Used to control the game
+ * Dùng để điều khiển game
  */
 class GameController implements KeyListener {
 
     private GamePanel gamePanel;
 
     /**
-     * Construct a universal game controller key listener for the game.
-     * @param gamePanel Attach game controller to this game panel
+     * Xây dựng một bộ nghe phím điều khiển chung cho trò chơi.
+     * @param gamePanel bộ điều khiển trò chơi
      */
     GameController(GamePanel gamePanel) {
         this.gamePanel = gamePanel;
@@ -416,8 +438,8 @@ class GameController implements KeyListener {
     }
 
     /**
-     * Key events for general game operations such as exit
-     * @param e Keyboard key pressed
+     * Key cài đặt.
+     * @param e Phím ấn
      */
     @Override
     public void keyPressed(KeyEvent e) {
