@@ -1,13 +1,12 @@
 package uet.oop.bomberman.entities;
 
 import javazoom.jl.player.Player;
-
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
-import java.io.FileInputStream;
+
 
 
 /**
@@ -242,7 +241,6 @@ public abstract class Explosion extends Entity {
     Explosion(Point2D.Float position) {
         super(position);
         this.sprites = ResourceCollection.SpriteMaps.EXPLOSION_SPRITEMAP.getSprites();
-
         this.centerOffset = 0;
         this.spriteIndex = 0;
         this.spriteTimer = 0;

@@ -70,6 +70,9 @@ public class Bomb extends TileObject {
         GameObjectCollection.spawn(new Explosion.Vertical(this.position, this.firepower, this.pierce));
         // trả lại số lượng bomb cũ
         this.bomber.restoreAmmount();
+
+        Sound.play(Sound.EXPLORE, 0);
+
     }
 
     public void setKicked(boolean kicked, KickDirection kickDirection) {

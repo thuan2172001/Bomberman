@@ -9,9 +9,7 @@ import java.awt.event.KeyListener;
 import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
-import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -331,23 +329,27 @@ public class GamePanel extends JPanel implements Runnable {
                     obj.onDestroy();
                     GameObjectCollection.gameObjects.get(list).remove(obj);
                 } else {
-                    for (int list2 = 0; list2 < GameObjectCollection.gameObjects.size(); list2++) {
-                        for (int objIndex2 = 0; objIndex2 < GameObjectCollection.gameObjects.get(list2).size(); objIndex2++) {
-                            Entity collidingObj = GameObjectCollection.gameObjects.get(list2).get(objIndex2);
-                            // Skip detecting collision on the same object as itself
-                            if (obj == collidingObj) {
-                                continue;
-                            }
+                    try {
+                        for (int list2 = 0; list2 < GameObjectCollection.gameObjects.size(); list2++) {
+                            for (int objIndex2 = 0; objIndex2 < GameObjectCollection.gameObjects.get(list2).size(); objIndex2++) {
+                                Entity collidingObj = GameObjectCollection.gameObjects.get(list2).get(objIndex2);
+                                // Skip detecting collision on the same object as itself
+                                if (obj == collidingObj) {
+                                    continue;
+                                }
 
-                            // Visitor pattern collision handling
-                            if (obj.getCollider().intersects(collidingObj.getCollider())) {
-                                // Use one of these
-                                collidingObj.onCollisionEnter(obj);
+                                // Visitor pattern collision handling
+                                if (obj.getCollider().intersects(collidingObj.getCollider())) {
+                                    // Use one of these
+                                    collidingObj.onCollisionEnter(obj);
 //                                obj.onCollisionEnter(collidingObj);
+                                }
                             }
                         }
+                        objIndex++;
+                    } catch (Exception e) {
+                        System.out.println("Lai loi ");
                     }
-                    objIndex++;
                 }
             }
         }

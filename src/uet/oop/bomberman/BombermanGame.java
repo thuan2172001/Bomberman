@@ -1,10 +1,10 @@
 package uet.oop.bomberman;
 
 import uet.oop.bomberman.entities.ResourceCollection;
+import uet.oop.bomberman.entities.Sound;
+
 import javax.swing.*;
 import java.awt.*;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 /**
  * Contains the main method to launch the game.
@@ -21,6 +21,14 @@ public class BombermanGame {
         GamePanel game;
         game = new GamePanel();
         game.init();
+
+        Sound s = new Sound();
+        try {
+            s.play(Sound.BACKGROUND, 3);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
 
         window = new GameWindow(game);
 

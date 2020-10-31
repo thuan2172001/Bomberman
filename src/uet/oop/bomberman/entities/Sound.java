@@ -1,86 +1,36 @@
 package uet.oop.bomberman.entities;
 
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
-import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.*;
+import java.io.IOException;
 
-public class Sound implements Runnable
-{
-    private boolean running = false;
-    private Thread thread;
 
-    public Sound()
+
+public class Sound {
+    public static String EXPLORE = "/textures/Explosion.wav";
+    public static String DEAD = "/textures/background.wav";
+    public static String WIN = "/textures/background.wav";
+    public static String LOSE = "/textures/background.wav";
+    public static String BACKGROUND = "/textures/background.wav";
+
+    public static synchronized void play(final String fileName, int loop_Timer)
     {
-        this.start();
-    }
-
-    public void start()
-    {
-        if(running)
-            return;
-        this.thread = new Thread(this);
-        this.running = true;
-        this.thread.start();
-    }
-
-    //
-    private boolean playSong = false;
-    private AudioInputStream inputStream;
-    private String url;
-    private Clip clip;
-
-    @Override
-    public void run()
-    {
-        while(running)
-        {
-            if(inputStream == null && playSong)
-            {
-                this.playSong = false;
-                try
-                {
-                    this.inputStream = AudioSystem.getAudioInputStream(Sound.class.getResource(url));
-                    this.clip.open(inputStream);
-                    this.clip.loop(10);
-                }
-                catch(Exception e)
-                {
-                    e.printStackTrace();
+        // Note: use .wav files
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Clip clip = AudioSystem.getClip();
+                    AudioInputStream inputStream = AudioSystem.getAudioInputStream(
+                                    Sound.class.getResourceAsStream(fileName));
+                    clip.open(inputStream);
+                    clip.start();
+                    clip.loop(loop_Timer);
+                } catch (LineUnavailableException | UnsupportedAudioFileException | IOException e) {
+                    System.out.println("play sound error: " + e.getMessage() + " for " + fileName);
                 }
             }
-        }
+        }).start();
     }
 
-    public void playBackGround(String string) // call to play .wav file
-    {
-        if(this.clip != null)
-        {
-            this.clip.stop();
-            this.clip.close();
-        }
-        try
-        {
-            this.clip = AudioSystem.getClip();
-        }
-        catch(LineUnavailableException e)
-        {
-            e.printStackTrace();
-        }
-        url = string + ".wav";
-        this.playSong = true;
-        this.inputStream = null;
-    }
 
-    public void disposeSound()
-    {
-        if(this.clip != null)
-        {
-            this.clip.stop();
-            this.clip.close();
-        }
-        this.clip = null;
-        this.playSong = false;
-        this.inputStream = null;
-    }
 }

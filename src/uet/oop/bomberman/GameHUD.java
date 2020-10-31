@@ -63,29 +63,33 @@ public class GameHUD {
      * affecting their score since the score was already updated.
      */
     public void updateScore() {
-        // Count dead players
-        int deadPlayers = 0;
-        for (int i = 0; i < this.players.length; i++) {
-            if (this.players[i].isDead()) {
-                deadPlayers++;
-            }
-        }
-
-        // Check for the last player standing and conclude the match
-        if (deadPlayers == this.players.length - 1) {
+        try {
+            // Count dead players
+            int deadPlayers = 0;
             for (int i = 0; i < this.players.length; i++) {
-                if (!this.players[i].isDead()) {
-                    this.playerScore[i] += 200;
-
-                    // level
-                    level++;
-
-                    this.matchSet = true;
+                if (this.players[i].isDead()) {
+                    deadPlayers++;
                 }
             }
-        } else if (deadPlayers >= this.players.length) {
-            // This should only be reached two or more of the last players die at the same time
-            this.matchSet = true;
+
+            // Check for the last player standing and conclude the match
+            if (deadPlayers == this.players.length - 1) {
+                for (int i = 0; i < this.players.length; i++) {
+                    if (!this.players[i].isDead()) {
+                        this.playerScore[i] += 200;
+
+                        // level
+                        level++;
+
+                        this.matchSet = true;
+                    }
+                }
+            } else if (deadPlayers >= this.players.length) {
+                // This should only be reached two or more of the last players die at the same time
+                this.matchSet = true;
+            }
+        } catch (Exception e) {
+            System.out.println("Loi nhieu qua");
         }
     }
 

@@ -98,7 +98,7 @@ public class ResourceCollection {
             SpriteMaps.BOMB_PIERCE.image = ImageIO.read(ResourceCollection.class.getResource("/textures/bomb_pierce.png"));
             SpriteMaps.EXPLOSION_SPRITEMAP.image = ImageIO.read(ResourceCollection.class.getResource("/textures/explosion.png"));
 
-            Files.MAP1.file = new InputStreamReader(ResourceCollection.class.getResourceAsStream("/textures/maps/level10.csv"));
+            Files.MAP1.file = new InputStreamReader(ResourceCollection.class.getResourceAsStream("/textures/maps/level1.csv"));
             Files.MAP2.file = new InputStreamReader(ResourceCollection.class.getResourceAsStream("/textures/maps/level2.csv"));
             Files.MAP3.file = new InputStreamReader(ResourceCollection.class.getResourceAsStream("/textures/maps/level3.csv"));
             Files.MAP4.file = new InputStreamReader(ResourceCollection.class.getResourceAsStream("/textures/maps/level4.csv"));
