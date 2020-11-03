@@ -26,6 +26,7 @@ public class Bomber extends Player {
     private int bombTimer; //thời gian bomb nổ, khởi tạo mặc định là 250, tối thiểu là 160
     private boolean pierce;
     private boolean kick;
+    private boolean supreme; // qua map luôn khi ăn portal
 
     /**
      * Tạo người đặt bom ở vị trí position với hoạt ảnh là mảng 2 chiều
@@ -51,6 +52,7 @@ public class Bomber extends Player {
         this.bombTimer = 250;
         this.pierce = false;
         this.kick = false;
+        this.supreme = false;
     }
 
     // --- Di chuyển ---
@@ -147,6 +149,18 @@ public class Bomber extends Player {
         return this.dead;
     }
 
+    public void setDead() {
+        this.dead = true;
+    }
+
+    public void setSupreme(boolean isSupreme) {
+        this.supreme = isSupreme;
+    }
+
+    public boolean isSupreme() {
+        return this.supreme;
+    }
+
     /**
      * Điều khiển, hành động, hoạt ảnh
      */
@@ -228,10 +242,7 @@ public class Bomber extends Player {
     }
 
     /**
-     * Bombs act as walls if the bomber is not already within the a certain distance as the bomb.
-     * This is also the big and ugly kicking logic. Touching this code is very dangerous and can introduce
-     * bugs to the kicking logic including stopping the bomb from moving.
-     * (ie. if the bomber is not standing on the bomb)
+     * Xử lí va chạm với bomb
      * @param collidingObj Solid bomb
      */
     @Override

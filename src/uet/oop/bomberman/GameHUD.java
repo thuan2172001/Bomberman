@@ -27,15 +27,27 @@ public class GameHUD {
         // Height of the HUD
         int height = GameWindow.HUD_HEIGHT;
         // Width of each player's information in the HUD, 2 players, 2 info boxes
-        int infoWidth = GamePanel.panelWidth / 2;
+        int infoWidth = GamePanel.panelWidth / 1;
 
         this.playerInfo[0] = new BufferedImage(infoWidth, height, BufferedImage.TYPE_INT_RGB);
-        this.playerInfo[1] = new BufferedImage(infoWidth, height, BufferedImage.TYPE_INT_RGB);
     }
 
-    int getLevel() {
+    void reset() {
+        this.playerScore[0] = 0;
+        this.playerScore[1] = 0;
+        level = 1;
+        this.matchSet = false;
+    }
+
+    public int getLevel() {
         return level;
     }
+
+    // dùng để hack game
+    public void setLevel(int level) {
+        this.level = level;
+    }
+
     /**
      * Used by game panel to draw player info to the screen
      * @return Player info box
@@ -70,17 +82,29 @@ public class GameHUD {
                 if (this.players[i].isDead()) {
                     deadPlayers++;
                 }
+                // ăn portal
+                if(this.players[i].isSupreme()) {
+                    for (int index = 0; index < this.players.length; index++) {
+                        if (!this.players[index].isDead() && index != i) {
+                            this.players[index].setDead();
+                        }
+                        else if (!this.players[index].isDead() && index == i) {
+                            this.playerScore[index] += 200;
+                        }
+                    }
+                    this.matchSet = true;
+                    level++;
+                    //this.players[i].setSupreme(false);
+                    break;
+                }
+
             }
 
-            // Check for the last player standing and conclude the match
+            // Người chết thua luôn
             if (deadPlayers == this.players.length - 1) {
                 for (int i = 0; i < this.players.length; i++) {
                     if (!this.players[i].isDead()) {
-                        this.playerScore[i] += 200;
-
                         // level
-                        level++;
-
                         this.matchSet = true;
                     }
                 }
@@ -88,6 +112,7 @@ public class GameHUD {
                 // This should only be reached two or more of the last players die at the same time
                 this.matchSet = true;
             }
+
         } catch (Exception e) {
             System.out.println("Loi nhieu qua");
         }
@@ -98,30 +123,27 @@ public class GameHUD {
      */
     void drawHUD() {
         Graphics[] playerGraphics = {
-                this.playerInfo[0].createGraphics(),
-                this.playerInfo[1].createGraphics(),
+                this.playerInfo[0].createGraphics()
         };
 
         // Clean info boxes
         playerGraphics[0].clearRect(0, 0, playerInfo[0].getWidth(), playerInfo[0].getHeight());
-        playerGraphics[1].clearRect(0, 0, playerInfo[1].getWidth(), playerInfo[1].getHeight());
 
         // Set border color per player
         playerGraphics[0].setColor(Color.WHITE);    // Player 1 info box border color
-        playerGraphics[1].setColor(Color.GRAY);     // Player 2 info box border color
 
         // Iterate loop for each player
         for (int i = 0; i < playerGraphics.length; i++) {
             Font font = new Font("Courier New", Font.BOLD, 24);
             // Draw border and sprite
-            playerGraphics[i].drawRect(1, 1, this.playerInfo[i].getWidth() - 2, this.playerInfo[i].getHeight() - 2);
-            playerGraphics[i].drawImage(this.players[i].getBaseSprite(), 0, 0, null);
+            playerGraphics[i].drawRect(1, 1, this.playerInfo[0].getWidth() - 2, this.playerInfo[0].getHeight() - 2);
+            playerGraphics[i].drawImage(this.players[0].getBaseSprite(), 0, 0, null);
 
             // Draw score
             playerGraphics[i].setFont(font);
             playerGraphics[i].setColor(Color.WHITE);
-            playerGraphics[i].drawString("Score: " + this.playerScore[i],
-                    this.playerInfo[i].getWidth() / 2 - 140, 32);
+            playerGraphics[i].drawString("Score: " + this.playerScore[0],
+                    this.playerInfo[i].getWidth() / 2 - 200, 32);
 
             playerGraphics[i].drawString("Level: " + this.level,
                     this.playerInfo[i].getWidth() / 2 + 45, 32);

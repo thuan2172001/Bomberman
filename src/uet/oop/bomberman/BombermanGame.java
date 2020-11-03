@@ -5,6 +5,7 @@ import uet.oop.bomberman.entities.Sound;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 
 /**
  * Contains the main method to launch the game.
@@ -24,11 +25,12 @@ public class BombermanGame {
 
         Sound s = new Sound();
         try {
-            s.play(Sound.BACKGROUND, 3);
+            s.play(s.BACKGROUNDMUSIC[1], 3);
         }
         catch (Exception e) {
             e.printStackTrace();
         }
+
 
         window = new GameWindow(game);
 

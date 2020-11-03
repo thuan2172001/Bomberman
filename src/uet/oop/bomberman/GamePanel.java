@@ -13,6 +13,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 /**
  * JPanel chứa toàn bộ trò chơi và logic vòng lặp trò chơi.
@@ -41,8 +43,28 @@ public class GamePanel extends JPanel implements Runnable {
     private HashMap<Integer, Key> controls1;
     private HashMap<Integer, Key> controls2;
 
-    private static final double SOFTWALL_RATE = 0.825;
+    private static final double SOFTWALL_RATE = 0.65;
 
+    public static BufferedImage[] SoftWall = {
+            ResourceCollection.Images.BOX0.getImage(), ResourceCollection.Images.BOX1.getImage(),
+            ResourceCollection.Images.BOX2.getImage(), ResourceCollection.Images.BOX3.getImage(),
+            ResourceCollection.Images.BOX4.getImage()
+    };
+
+    BufferedImage[] getSoftWall(int id) {
+        if (id == 0)
+            return new BufferedImage[]{ResourceCollection.Images.BOX0.getImage(), ResourceCollection.Images.BOX1.getImage()};
+        else if (id == 1)
+            return new BufferedImage[]{ResourceCollection.Images.BOX2.getImage(), ResourceCollection.Images.BOX3.getImage()};
+        else if (id == 2)
+            return new BufferedImage[]{ResourceCollection.Images.BOX4.getImage(), ResourceCollection.Images.BOX5.getImage()};
+        else if (id == 3)
+            return new BufferedImage[]{ResourceCollection.Images.BOX6.getImage(), ResourceCollection.Images.BOX7.getImage()};
+        else if (id == 4)
+            return new BufferedImage[]{ResourceCollection.Images.FOOD0.getImage(), ResourceCollection.Images.FOOD1.getImage(),
+                    ResourceCollection.Images.FOOD2.getImage(), ResourceCollection.Images.FOOD3.getImage()};
+        else return SoftWall;
+    }
     /**
      * Khởi tạo bảng điều khiển trò chơi và tải trong một tệp bản đồ.
      */
@@ -113,7 +135,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     /**
      * Tạo bản đồ cho tệp bản đồ. Bản đồ dạng lưới và mỗi ô có kích thước 32x32.
-     * Tạo các đối tượng trò chơi tùy thuộc vào kí tự trong file.
+     * Tạo các đối tượng trò chơi tùy thuộc vào kí tự trong file. id từ 0 - 9
      */
     private void generateMap(int id) {
         // Kích thước map
@@ -122,7 +144,11 @@ public class GamePanel extends JPanel implements Runnable {
         this.mapHeight = mapLayout.size();
         panelWidth = this.mapWidth * 32;
         panelHeight = this.mapHeight * 32;
-
+        if (id == 1) this.bg = ResourceCollection.Images.BLOCKTILE.getImage(); // doi glass sang gach Map thu 2
+        else if (id == 2) this.bg = ResourceCollection.Images.SNOWTILE.getImage();
+        else if (id == 3) this.bg = ResourceCollection.Images.PALACETILE.getImage();
+        else if (id == 4) this.bg = ResourceCollection.Images.BISCUIT1.getImage();
+        else this.bg = ResourceCollection.Images.BACKGROUND.getImage();
         this.world = new BufferedImage(this.mapWidth * 32, this.mapHeight * 32, BufferedImage.TYPE_INT_RGB);
 
         // tạo toàn bộ map
@@ -131,7 +157,7 @@ public class GamePanel extends JPanel implements Runnable {
                 switch (mapLayout.get(y).get(x)) {
                     case ("S"):     // Soft wall; breakable
                         if (Math.random() < SOFTWALL_RATE) {
-                            BufferedImage sprSoftWall = ResourceCollection.Images.SOFT_WALL.getImage();
+                            BufferedImage sprSoftWall = getSoftWall(id)[new Random().nextInt(getSoftWall(id).length)];
                             Wall softWall = new Wall(new Point2D.Float(x * 32, y * 32), sprSoftWall, true);
                             GameObjectCollection.spawn(softWall);
                         }
@@ -166,8 +192,20 @@ public class GamePanel extends JPanel implements Runnable {
                         GameObjectCollection.spawn(player1);
                         break;
 
+                        /*
                     case ("2"):     // Player 2; Bomber
                         BufferedImage[][] sprMapP2 = ResourceCollection.SpriteMaps.PLAYER_2.getSprites();
+                        Bomber player2 = new Bomber(new Point2D.Float(x * 32, y * 32 - 16), sprMapP2);
+                        PlayerController playerController2 = new PlayerController(player2, this.controls2);
+                        this.addKeyListener(playerController2);
+                        this.gameHUD.assignPlayer(player2, 1);
+                        GameObjectCollection.spawn(player2);
+                        break;
+
+                         */
+
+                    case ("AIC"):     // AI; Cactus
+                        BufferedImage[][] sprMapP2 = ResourceCollection.SpriteMaps.CACTUS.getSprites();
                         Bomber player2 = new Bomber(new Point2D.Float(x * 32, y * 32 - 16), sprMapP2);
                         PlayerController playerController2 = new PlayerController(player2, this.controls2);
                         this.addKeyListener(playerController2);
@@ -214,6 +252,109 @@ public class GamePanel extends JPanel implements Runnable {
                         Powerup portal = new Powerup(new Point2D.Float(x * 32, y * 32), Powerup.Type.Portal);
                         GameObjectCollection.spawn(portal);
                         break;
+
+                    case ("R"):    // Rose
+                        BufferedImage sprSoftWall = ResourceCollection.Images.ROSE.getImage();
+                        Wall softWall = new Wall(new Point2D.Float(x * 32, y * 32), sprSoftWall, true);
+                        GameObjectCollection.spawn(softWall);
+                        break;
+
+                    case ("W"):     // Water; unbreakable
+                        BufferedImage waterWall = ResourceCollection.Images.WATER.getImage();
+                        Wall water = new Wall(new Point2D.Float(x * 32, y * 32), waterWall, false);
+                        GameObjectCollection.spawn(water);
+                        break;
+
+                    case ("LV"):     // Lava; unbreakable
+                        BufferedImage lavaWall = ResourceCollection.Images.LAVA.getImage();
+                        Wall lava = new Wall(new Point2D.Float(x * 32, y * 32), lavaWall, false);
+                        GameObjectCollection.spawn(lava);
+                        break;
+
+                    case ("CR1"): //creapy1; unbreakable
+                        BufferedImage creepyWall1 = ResourceCollection.Images.CREEPY1.getImage();
+                        Wall creepy1 = new Wall(new Point2D.Float(x * 32, y * 32), creepyWall1, false);
+                        GameObjectCollection.spawn(creepy1);
+                        break;
+                    case ("CR2"): //creapy2; unbreakable
+                        BufferedImage creepyWall2 = ResourceCollection.Images.CREEPY2.getImage();
+                        Wall creepy2 = new Wall(new Point2D.Float(x * 32, y * 32), creepyWall2, false);
+                        GameObjectCollection.spawn(creepy2);
+                        break;
+                    case ("CR3"): //creapy3; unbreakable
+                        BufferedImage creepyWall3 = ResourceCollection.Images.CREEPY3.getImage();
+                        Wall creepy3 = new Wall(new Point2D.Float(x * 32, y * 32), creepyWall3, false);
+                        GameObjectCollection.spawn(creepy3);
+                        break;
+                    case ("CR4"): //creapy4; unbreakable
+                        BufferedImage creepyWall4 = ResourceCollection.Images.CREEPY4.getImage();
+                        Wall creepy4 = new Wall(new Point2D.Float(x * 32, y * 32), creepyWall4, false);
+                        GameObjectCollection.spawn(creepy4);
+                        break;
+
+                    case ("PZ1"): //pizza; unbreakable
+                        BufferedImage pizzaWall1 = ResourceCollection.Images.PIZZA1.getImage();
+                        Wall pizza1 = new Wall(new Point2D.Float(x * 32, y * 32), pizzaWall1, false);
+                        GameObjectCollection.spawn(pizza1);
+                        break;
+                    case ("PZ2"): //pizza; unbreakable
+                        BufferedImage pizzaWall2 = ResourceCollection.Images.PIZZA2.getImage();
+                        Wall pizza2 = new Wall(new Point2D.Float(x * 32, y * 32), pizzaWall2, false);
+                        GameObjectCollection.spawn(pizza2);
+                        break;
+                    case ("PZ3"): //pizza; unbreakable
+                        BufferedImage pizzaWall3 = ResourceCollection.Images.PIZZA3.getImage();
+                        Wall pizza3 = new Wall(new Point2D.Float(x * 32, y * 32), pizzaWall3, false);
+                        GameObjectCollection.spawn(pizza3);
+                        break;
+                    case ("PZ4"): //pizza; unbreakable
+                        BufferedImage pizzaWall4 = ResourceCollection.Images.PIZZA4.getImage();
+                        Wall pizza4 = new Wall(new Point2D.Float(x * 32, y * 32), pizzaWall4, false);
+                        GameObjectCollection.spawn(pizza4);
+                        break;
+
+                    case ("CD1"): //candy; unbreakable
+                        BufferedImage candyWall1 = ResourceCollection.Images.CANDY0.getImage();
+                        Wall candy1 = new Wall(new Point2D.Float(x * 32, y * 32), candyWall1, false);
+                        GameObjectCollection.spawn(candy1);
+                        break;
+                    case ("CD2"): //candy; unbreakable
+                        BufferedImage candyWall2 = ResourceCollection.Images.CANDY1.getImage();
+                        Wall candy2 = new Wall(new Point2D.Float(x * 32, y * 32), candyWall2, false);
+                        GameObjectCollection.spawn(candy2);
+                        break;
+                    case ("CD3"): //candy; unbreakable
+                        BufferedImage candyWall3 = ResourceCollection.Images.CANDY2.getImage();
+                        Wall candy3 = new Wall(new Point2D.Float(x * 32, y * 32), candyWall3, false);
+                        GameObjectCollection.spawn(candy3);
+                        break;
+                    case ("CD4"): //candy; unbreakable
+                        BufferedImage candyWall4 = ResourceCollection.Images.CANDY3.getImage();
+                        Wall candy4 = new Wall(new Point2D.Float(x * 32, y * 32), candyWall4, false);
+                        GameObjectCollection.spawn(candy4);
+                        break;
+
+                    case ("TR"):     // Tree; unbreakable
+                        BufferedImage treeWall = ResourceCollection.Images.TREE.getImage();
+                        Wall tree = new Wall(new Point2D.Float(x * 32, y * 32), treeWall, false);
+                        GameObjectCollection.spawn(tree);
+                        break;
+
+                    case ("STR"):     // snow Tree; unbreakable
+                        BufferedImage snowTreeWall = ResourceCollection.Images.SNOWTREE.getImage();
+                        Wall snowTree = new Wall(new Point2D.Float(x * 32, y * 32), snowTreeWall, false);
+                        GameObjectCollection.spawn(snowTree);
+                        break;
+
+
+                    case ("SKE"):     // Rương kho báu; unbreakable
+                        // biến code sử dụng để chọn hướng gạch dựa trên các ô liền kề
+                        BufferedImage skeletonHead = ResourceCollection.Images.SKE.getImage();
+                        Wall skeletonHeadW = new Wall(new Point2D.Float(x * 32, y * 32), skeletonHead, false);
+                        GameObjectCollection.spawn(skeletonHeadW);
+                        break;
+
+
                     default:
                         break;
                 }
@@ -258,8 +399,13 @@ public class GamePanel extends JPanel implements Runnable {
         this.init();
     }
 
+    void nextMap() {
+        this.gameHUD.setLevel(this.gameHUD.getLevel() + 1);
+        this.resetMap(this.gameHUD.getLevel() - 1);
+    }
+
     /**
-     * Reset map, điểm và level vẫn giữ.
+     * Reset map, điểm và level vẫn giữ. id từ 0 - 9.
      */
     private void resetMap(int id) {
         int real_id = id % 10;
@@ -297,10 +443,15 @@ public class GamePanel extends JPanel implements Runnable {
             lastTime = currentTime;
 
             if (delta >= 1) {
-                this.update();
+                try {
+                    this.update();
+                } catch (Exception e) {
+                    System.out.println("Loi hack game");
+                }
                 delta--;
             }
 
+            // vẽ lại tất cả
             this.repaint();
 
             if (System.currentTimeMillis() - timer > 1000) {
@@ -317,7 +468,7 @@ public class GamePanel extends JPanel implements Runnable {
      * Deletes game objects that are marked for deletion.
      * Checks if a player is a winner and updates score, then reset the map.
      */
-    private void update() {
+    private void update() throws IndexOutOfBoundsException {
         GameObjectCollection.sortBomberObjects();
         // Loop through every game object arraylist
         for (int list = 0; list < GameObjectCollection.gameObjects.size(); list++) {
@@ -348,7 +499,7 @@ public class GamePanel extends JPanel implements Runnable {
                         }
                         objIndex++;
                     } catch (Exception e) {
-                        System.out.println("Lai loi ");
+                        System.out.println("Lai loi");
                     }
                 }
             }
@@ -360,11 +511,25 @@ public class GamePanel extends JPanel implements Runnable {
         if (!this.gameHUD.matchSet) {
             this.gameHUD.updateScore();
         } else {
-            // Checking size of array list because when a bomber dies, they do not immediately get deleted
-            // This makes it so that the next round doesn't start until the winner is the only bomber object on the map
-            if (GameObjectCollection.bomberObjects.size() <= 1) {
+            boolean checkSupreme = false;
+            for (Bomber bomber : GameObjectCollection.bomberObjects) {
+                if (bomber.isSupreme()) {
+                    checkSupreme = true;
+                    break;
+                }
+            }
+            // ĂN PORTAL
+            if (GameObjectCollection.bomberObjects.size() == 1 && checkSupreme) {
                 this.resetMap(this.gameHUD.getLevel() - 1);
                 this.gameHUD.matchSet = false;
+                System.out.println("an portal");
+            }
+            // Checking size of array list because when a bomber dies, they do not immediately get deleted
+            // This makes it so that the next round doesn't start until the winner is the only bomber object on the map
+            else if (GameObjectCollection.bomberObjects.size() == 1 && !checkSupreme) {
+                this.resetMap(0);
+                this.gameHUD.reset();
+                System.out.println("ko an portal");
             }
         }
 
@@ -392,6 +557,16 @@ public class GamePanel extends JPanel implements Runnable {
                 this.buffer.drawImage(this.bg, i, j, null);
             }
         }
+
+        // Draw background rieng map do an
+        if (this.bg == ResourceCollection.Images.BISCUIT1.getImage()) {
+            for (int i = 0; i < this.world.getWidth(); i += this.bg.getWidth()) {
+                for (int j = 0; j < this.world.getHeight(); j += 2 * this.bg.getHeight()) {
+                    this.buffer.drawImage(ResourceCollection.Images.BISCUIT2.getImage(), i, j, null);
+                }
+            }
+        }
+
 
         // Draw game objects
         try {
@@ -487,6 +662,11 @@ class GameController implements KeyListener {
                 System.out.println("F5 key pressed: Resetting game");
                 this.gamePanel.resetGame();
             }
+        }
+
+        if (e.getKeyCode() == KeyEvent.VK_F9) {
+            System.out.println("hack game");
+            this.gamePanel.nextMap();
         }
     }
 

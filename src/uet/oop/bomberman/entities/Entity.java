@@ -97,7 +97,7 @@ public abstract class Entity implements Observable, Collidable {
     }
 
     /**
-     * Get the rectangle collider of this game object.
+     * Nhận lại vị trí của Collider
      * @return A Rectangle2D collider
      */
     public Rectangle2D.Float getCollider() {
@@ -105,8 +105,7 @@ public abstract class Entity implements Observable, Collidable {
     }
 
     /**
-     * Get the center of the collider of this game object.
-     * @return A Point2D at the center of the collider
+     * Nhận trung tâm của object's collider
      */
     public Point2D.Float getColliderCenter() {
         return new Point2D.Float((float) this.collider.getCenterX(), (float) this.collider.getCenterY());
@@ -117,9 +116,7 @@ public abstract class Entity implements Observable, Collidable {
     }
 
     /**
-     * Draws the game object in the game world to g.
-     * (ie. the buffer which will be drawn to the screen)
-     * @param g Graphics object that is passed in for the game object to draw to
+     * Hàm vẽ một object.
      */
     public void drawImage(Graphics g) {
         AffineTransform rotation = AffineTransform.getTranslateInstance(this.position.getX(), this.position.getY());
@@ -135,19 +132,19 @@ public abstract class Entity implements Observable, Collidable {
 }
 
 /**
- * Observer pattern game state updating. Game objects perform certain actions based on the state of the game.
+ * interface để định hướng khả năng có thể được thấy của một thực thể.
  */
 interface Observable {
 
     /**
-     * Repeatedly called during the game loop.
+     * render lại Entity mỗi game loop.
      */
     default void update() {
 
     }
 
     /**
-     * Called when the game object gets destroyed.
+     * Gọi khi mà một thực thể bị phá hủy.
      */
     default void onDestroy() {
 
@@ -157,9 +154,7 @@ interface Observable {
 }
 
 /**
- * Visitor pattern collision handling. Blank default methods so that subclasses only need to
- * override the ones they need to avoid overriding them in every subclass only to leave them empty.
- * Not all game objects interact with every other game object.
+ * Va chạm Interface.
  */
 interface Collidable {
 
@@ -169,6 +164,10 @@ interface Collidable {
      * @param collidingObj Vật thể va chạm vào
      */
     void onCollisionEnter(Entity collidingObj);
+
+    default void handleCollision(Monster collidingObj) {
+
+    }
 
     default void handleCollision(Bomber collidingObj) {
 

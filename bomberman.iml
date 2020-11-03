@@ -18,5 +18,6 @@
     <orderEntry type="library" name="Maven: org.openjfx:javafx-base:win:15" level="project" />
     <orderEntry type="library" name="Maven: org.openjfx:javafx-graphics:15" level="project" />
     <orderEntry type="library" name="Maven: org.openjfx:javafx-graphics:win:15" level="project" />
+    <orderEntry type="library" name="Maven: javazoom:jlayer:1.0.1" level="project" />
   </component>
 </module>

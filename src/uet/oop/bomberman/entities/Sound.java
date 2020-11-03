@@ -11,6 +11,7 @@ public class Sound {
     public static String WIN = "/textures/background.wav";
     public static String LOSE = "/textures/background.wav";
     public static String BACKGROUND = "/textures/background.wav";
+    public static String[] BACKGROUNDMUSIC = {"/textures/background.wav", "/textures/muathutrongmatem.wav"};
 
     public static synchronized void play(final String fileName, int loop_Timer)
     {
@@ -31,6 +32,5 @@ public class Sound {
             }
         }).start();
     }
-
 
 }

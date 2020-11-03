@@ -31,7 +31,7 @@ public class Wall extends TileObject {
     @Override
     public void onDestroy() {
         double random = Math.random(); // random từ 0.0 - 1.0
-        if (random < 0.5) {
+        if (random < 0.4) {
             Powerup powerup = new Powerup(this.position, Powerup.randomPower());
             GameObjectCollection.spawn(powerup);
         }

@@ -12,11 +12,17 @@ import java.util.HashMap;
 public class ResourceCollection {
 
     private static HashMap<Integer, BufferedImage> hardWallTiles;
+    private static HashMap<Integer, BufferedImage> waterFallTiles;
 
     public enum Images {
         ICON,
-        BACKGROUND,
-        SOFT_WALL,
+        BACKGROUND, BLOCKTILE, SNOWTILE, PALACETILE, BISCUIT1, BISCUIT2,
+        FOOD0, FOOD1, FOOD2, FOOD3,
+        CANDY0, CANDY1, CANDY2, CANDY3,
+        BOX0, BOX1, BOX2, BOX3, BOX4, BOX5, BOX6, BOX7, ROSE,
+        PIZZA1, PIZZA2, PIZZA3, PIZZA4,
+        TREE, SNOWTREE, WATER, LAVA, CREEPY1, CREEPY2, CREEPY3, CREEPY4,
+        SKE,
         POWER_BOMB,
         POWER_FIREUP,
         POWER_FIREMAX,
@@ -36,11 +42,13 @@ public class ResourceCollection {
     public enum SpriteMaps {
         PLAYER_1,
         PLAYER_2,
-        PLAYER_3,
-        PLAYER_4,
+        WATER_FALL,
         HARD_WALLS,
         BOMB,
         BOMB_PIERCE,
+        FIRE_MONSTER,
+        DRAGON_MONSTER,
+        WOLF, CACTUS,
         EXPLOSION_SPRITEMAP;
 
         private BufferedImage image = null;
@@ -74,6 +82,7 @@ public class ResourceCollection {
         return hardWallTiles.get(key);
     }
 
+
     /**
      * Đọc tệp vào chương trình.
      */
@@ -81,7 +90,48 @@ public class ResourceCollection {
         try {
             Images.ICON.image = ImageIO.read(ResourceCollection.class.getResource("/textures/icon.png"));
             Images.BACKGROUND.image = ImageIO.read(ResourceCollection.class.getResource("/textures/grass.png"));
-            Images.SOFT_WALL.image = ImageIO.read(ResourceCollection.class.getResource("/textures/softWall.png"));
+            Images.BLOCKTILE.image = ImageIO.read(ResourceCollection.class.getResource("/textures/blocktile.jpg"));
+            Images.PALACETILE.image = ImageIO.read(ResourceCollection.class.getResource("/textures/palacetile.png"));
+            Images.BISCUIT1.image = ImageIO.read(ResourceCollection.class.getResource("/textures/biscuit1.png"));
+            Images.BISCUIT2.image = ImageIO.read(ResourceCollection.class.getResource("/textures/biscuit2.png"));
+
+            Images.FOOD0.image = ImageIO.read(ResourceCollection.class.getResource("/textures/food0.png"));
+            Images.FOOD1.image = ImageIO.read(ResourceCollection.class.getResource("/textures/food1.png"));
+            Images.FOOD2.image = ImageIO.read(ResourceCollection.class.getResource("/textures/food2.png"));
+            Images.FOOD3.image = ImageIO.read(ResourceCollection.class.getResource("/textures/food3.png"));
+
+            Images.BOX0.image = ImageIO.read(ResourceCollection.class.getResource("/textures/box0.png"));
+            Images.BOX1.image = ImageIO.read(ResourceCollection.class.getResource("/textures/box1.png"));
+            Images.BOX2.image = ImageIO.read(ResourceCollection.class.getResource("/textures/box2.png"));
+            Images.BOX3.image = ImageIO.read(ResourceCollection.class.getResource("/textures/box3.png"));
+            Images.BOX4.image = ImageIO.read(ResourceCollection.class.getResource("/textures/box4.png"));
+            Images.BOX5.image = ImageIO.read(ResourceCollection.class.getResource("/textures/box5.png"));
+            Images.BOX6.image = ImageIO.read(ResourceCollection.class.getResource("/textures/box6.png"));
+            Images.BOX7.image = ImageIO.read(ResourceCollection.class.getResource("/textures/box7.png"));
+
+            Images.ROSE.image = ImageIO.read(ResourceCollection.class.getResource("/textures/rose.png"));
+            Images.TREE.image = ImageIO.read(ResourceCollection.class.getResource("/textures/tree.png"));
+            Images.SKE.image = ImageIO.read(ResourceCollection.class.getResource("/textures/treasure.png"));
+            Images.SNOWTREE.image = ImageIO.read(ResourceCollection.class.getResource("/textures/snowTree.png"));
+            Images.WATER.image = ImageIO.read(ResourceCollection.class.getResource("/textures/water.png"));
+            Images.LAVA.image = ImageIO.read(ResourceCollection.class.getResource("/textures/lava.png"));
+            Images.SNOWTILE.image = ImageIO.read(ResourceCollection.class.getResource("/textures/snowtile.png"));
+
+            Images.CANDY0.image = ImageIO.read(ResourceCollection.class.getResource("/textures/candy1.png"));
+            Images.CANDY1.image = ImageIO.read(ResourceCollection.class.getResource("/textures/candy2.png"));
+            Images.CANDY2.image = ImageIO.read(ResourceCollection.class.getResource("/textures/candy3.png"));
+            Images.CANDY3.image = ImageIO.read(ResourceCollection.class.getResource("/textures/candy4.png"));
+
+            Images.PIZZA1.image = ImageIO.read(ResourceCollection.class.getResource("/textures/pizza1.png"));
+            Images.PIZZA2.image = ImageIO.read(ResourceCollection.class.getResource("/textures/pizza2.png"));
+            Images.PIZZA3.image = ImageIO.read(ResourceCollection.class.getResource("/textures/pizza3.png"));
+            Images.PIZZA4.image = ImageIO.read(ResourceCollection.class.getResource("/textures/pizza4.png"));
+
+            Images.CREEPY1.image = ImageIO.read(ResourceCollection.class.getResource("/textures/part1.png"));
+            Images.CREEPY2.image = ImageIO.read(ResourceCollection.class.getResource("/textures/part2.png"));
+            Images.CREEPY3.image = ImageIO.read(ResourceCollection.class.getResource("/textures/part3.png"));
+            Images.CREEPY4.image = ImageIO.read(ResourceCollection.class.getResource("/textures/part4.png"));
+
             Images.POWER_BOMB.image = ImageIO.read(ResourceCollection.class.getResource("/textures/power_bomb.png"));
             Images.POWER_FIREUP.image = ImageIO.read(ResourceCollection.class.getResource("/textures/power_fireup.png"));
             Images.POWER_FIREMAX.image = ImageIO.read(ResourceCollection.class.getResource("/textures/power_firemax.png"));
@@ -91,12 +141,19 @@ public class ResourceCollection {
             Images.POWER_TIMER.image = ImageIO.read(ResourceCollection.class.getResource("/textures/power_timer.png"));
             Images.PORTAL.image = ImageIO.read(ResourceCollection.class.getResource("/textures/portal.png"));
 
+
             SpriteMaps.PLAYER_1.image = ImageIO.read(ResourceCollection.class.getResource("/textures/bomber1.png"));
             SpriteMaps.PLAYER_2.image = ImageIO.read(ResourceCollection.class.getResource("/textures/bomber2.png"));
             SpriteMaps.HARD_WALLS.image = ImageIO.read(ResourceCollection.class.getResource("/textures/hardWalls.png"));
+            SpriteMaps.WATER_FALL.image = ImageIO.read(ResourceCollection.class.getResource("/textures/waterFall.png"));
             SpriteMaps.BOMB.image = ImageIO.read(ResourceCollection.class.getResource("/textures/bomb.png"));
             SpriteMaps.BOMB_PIERCE.image = ImageIO.read(ResourceCollection.class.getResource("/textures/bomb_pierce.png"));
             SpriteMaps.EXPLOSION_SPRITEMAP.image = ImageIO.read(ResourceCollection.class.getResource("/textures/explosion.png"));
+            SpriteMaps.DRAGON_MONSTER.image = ImageIO.read(ResourceCollection.class.getResource("/textures/dragonMonster.png"));
+            SpriteMaps.FIRE_MONSTER.image = ImageIO.read(ResourceCollection.class.getResource("/textures/fireMonster.png"));
+            SpriteMaps.WOLF.image = ImageIO.read(ResourceCollection.class.getResource("/textures/wolf.png"));
+            SpriteMaps.CACTUS.image = ImageIO.read(ResourceCollection.class.getResource("/textures/cactus.png"));
+
 
             Files.MAP1.file = new InputStreamReader(ResourceCollection.class.getResourceAsStream("/textures/maps/level1.csv"));
             Files.MAP2.file = new InputStreamReader(ResourceCollection.class.getResourceAsStream("/textures/maps/level2.csv"));
@@ -122,6 +179,10 @@ public class ResourceCollection {
     public static void init() {
         SpriteMaps.PLAYER_1.sprites = sliceSpriteMap(SpriteMaps.PLAYER_1.image, 32, 48);
         SpriteMaps.PLAYER_2.sprites = sliceSpriteMap(SpriteMaps.PLAYER_2.image, 32, 48);
+        SpriteMaps.DRAGON_MONSTER.sprites = sliceSpriteMap(SpriteMaps.DRAGON_MONSTER.image, 32, 48);
+        SpriteMaps.FIRE_MONSTER.sprites = sliceSpriteMap(SpriteMaps.FIRE_MONSTER.image, 32, 48);
+        SpriteMaps.WOLF.sprites = sliceSpriteMap(SpriteMaps.WOLF.image, 32, 48);
+        SpriteMaps.CACTUS.sprites = sliceSpriteMap(SpriteMaps.CACTUS.image, 32, 48);
         SpriteMaps.HARD_WALLS.sprites = sliceSpriteMap(SpriteMaps.HARD_WALLS.image, 32, 32);
         SpriteMaps.BOMB.sprites = sliceSpriteMap(SpriteMaps.BOMB.image, 32, 32);
         SpriteMaps.BOMB_PIERCE.sprites = sliceSpriteMap(SpriteMaps.BOMB_PIERCE.image, 32, 32);
@@ -130,11 +191,11 @@ public class ResourceCollection {
     }
 
     /**
-     * Slice sprite sheet into individual sprites stored in a two-dimensional array.
-     * @param spriteMap Sprite sheet to be sliced
-     * @param spriteWidth Width of each individual sprite
-     * @param spriteHeight Height of each individual sprite
-     * @return Two-dimensional array of sprites
+     * Cắt nhỏ spriteSheet ra đề dùng.
+     * @param spriteMap Sprite sheet
+     * @param spriteWidth Width của từng sprite
+     * @param spriteHeight Height của từng sprite
+     * @return mảng 2 chiều chứa các sprite sau khi đc cắt
      */
     private static BufferedImage[][] sliceSpriteMap(BufferedImage spriteMap, int spriteWidth, int spriteHeight) {
         int rows = spriteMap.getHeight() / spriteHeight;
@@ -150,16 +211,16 @@ public class ResourceCollection {
     }
 
     /**
-     * Called in loadMap to load tile map for hard wall sprites.
-     * The correct sprite is chosen for hard wall based on adjacent hard walls.
+     * Hàm gọi tường cứng để phù hợp với hướng
+     * phụ thuộc vào các vật thể tường cứng nằm cạnh.
      * @param tiles Double array of sliced tile map
      */
     private static void loadHardWallTiles(BufferedImage[][] tiles) {
         hardWallTiles = new HashMap<>();
         /*
-            [ ][1][ ]
-            [8][X][2]
-            [ ][4][ ]
+            [NS][1] [NE]
+            [3] [X] [2]
+            [SW][4] [EW]
             1st bit = north
             2nd bit = east
             3rd bit = south
@@ -189,4 +250,5 @@ public class ResourceCollection {
 
         hardWallTiles.put(0b1111, tiles[1][0]);  // N S W E
     }
+
 }
