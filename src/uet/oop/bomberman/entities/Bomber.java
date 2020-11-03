@@ -26,6 +26,7 @@ public class Bomber extends Player {
     private int bombTimer; //thời gian bomb nổ, khởi tạo mặc định là 250, tối thiểu là 160
     private boolean pierce;
     private boolean kick;
+    private boolean supreme; // qua map luôn khi ăn portal
 
     /**
      * Tạo người đặt bom ở vị trí position với hoạt ảnh là mảng 2 chiều
@@ -51,6 +52,7 @@ public class Bomber extends Player {
         this.bombTimer = 250;
         this.pierce = false;
         this.kick = false;
+        this.supreme = false;
     }
 
     // --- Di chuyển ---
@@ -145,6 +147,18 @@ public class Bomber extends Player {
      */
     public boolean isDead() {
         return this.dead;
+    }
+
+    public void setDead() {
+        this.dead = true;
+    }
+
+    public void setSupreme(boolean isSupreme) {
+        this.supreme = isSupreme;
+    }
+
+    public boolean isSupreme() {
+        return this.supreme;
     }
 
     /**

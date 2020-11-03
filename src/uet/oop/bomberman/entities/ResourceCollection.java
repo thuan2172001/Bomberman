@@ -17,6 +17,7 @@ public class ResourceCollection {
         ICON,
         BACKGROUND,
         SOFT_WALL,
+        BOX1, BOX2, ROSE,
         POWER_BOMB,
         POWER_FIREUP,
         POWER_FIREMAX,
@@ -41,6 +42,8 @@ public class ResourceCollection {
         HARD_WALLS,
         BOMB,
         BOMB_PIERCE,
+        FIRE_MONSTER,
+        DRAGON_MONSTER,
         EXPLOSION_SPRITEMAP;
 
         private BufferedImage image = null;
@@ -82,6 +85,10 @@ public class ResourceCollection {
             Images.ICON.image = ImageIO.read(ResourceCollection.class.getResource("/textures/icon.png"));
             Images.BACKGROUND.image = ImageIO.read(ResourceCollection.class.getResource("/textures/grass.png"));
             Images.SOFT_WALL.image = ImageIO.read(ResourceCollection.class.getResource("/textures/softWall.png"));
+            Images.BOX1.image = ImageIO.read(ResourceCollection.class.getResource("/textures/box1.png"));
+            Images.BOX2.image = ImageIO.read(ResourceCollection.class.getResource("/textures/box2.png"));
+            Images.ROSE.image = ImageIO.read(ResourceCollection.class.getResource("/textures/rose.png"));
+
             Images.POWER_BOMB.image = ImageIO.read(ResourceCollection.class.getResource("/textures/power_bomb.png"));
             Images.POWER_FIREUP.image = ImageIO.read(ResourceCollection.class.getResource("/textures/power_fireup.png"));
             Images.POWER_FIREMAX.image = ImageIO.read(ResourceCollection.class.getResource("/textures/power_firemax.png"));
@@ -91,12 +98,16 @@ public class ResourceCollection {
             Images.POWER_TIMER.image = ImageIO.read(ResourceCollection.class.getResource("/textures/power_timer.png"));
             Images.PORTAL.image = ImageIO.read(ResourceCollection.class.getResource("/textures/portal.png"));
 
+
             SpriteMaps.PLAYER_1.image = ImageIO.read(ResourceCollection.class.getResource("/textures/bomber1.png"));
             SpriteMaps.PLAYER_2.image = ImageIO.read(ResourceCollection.class.getResource("/textures/bomber2.png"));
             SpriteMaps.HARD_WALLS.image = ImageIO.read(ResourceCollection.class.getResource("/textures/hardWalls.png"));
             SpriteMaps.BOMB.image = ImageIO.read(ResourceCollection.class.getResource("/textures/bomb.png"));
             SpriteMaps.BOMB_PIERCE.image = ImageIO.read(ResourceCollection.class.getResource("/textures/bomb_pierce.png"));
             SpriteMaps.EXPLOSION_SPRITEMAP.image = ImageIO.read(ResourceCollection.class.getResource("/textures/explosion.png"));
+            SpriteMaps.DRAGON_MONSTER.image = ImageIO.read(ResourceCollection.class.getResource("/textures/dragonMonster.png"));
+            SpriteMaps.FIRE_MONSTER.image = ImageIO.read(ResourceCollection.class.getResource("/textures/fireMonster.png"));
+
 
             Files.MAP1.file = new InputStreamReader(ResourceCollection.class.getResourceAsStream("/textures/maps/level1.csv"));
             Files.MAP2.file = new InputStreamReader(ResourceCollection.class.getResourceAsStream("/textures/maps/level2.csv"));
@@ -122,6 +133,8 @@ public class ResourceCollection {
     public static void init() {
         SpriteMaps.PLAYER_1.sprites = sliceSpriteMap(SpriteMaps.PLAYER_1.image, 32, 48);
         SpriteMaps.PLAYER_2.sprites = sliceSpriteMap(SpriteMaps.PLAYER_2.image, 32, 48);
+        SpriteMaps.DRAGON_MONSTER.sprites = sliceSpriteMap(SpriteMaps.DRAGON_MONSTER.image, 32, 48);
+        SpriteMaps.FIRE_MONSTER.sprites = sliceSpriteMap(SpriteMaps.FIRE_MONSTER.image, 32, 48);
         SpriteMaps.HARD_WALLS.sprites = sliceSpriteMap(SpriteMaps.HARD_WALLS.image, 32, 32);
         SpriteMaps.BOMB.sprites = sliceSpriteMap(SpriteMaps.BOMB.image, 32, 32);
         SpriteMaps.BOMB_PIERCE.sprites = sliceSpriteMap(SpriteMaps.BOMB_PIERCE.image, 32, 32);

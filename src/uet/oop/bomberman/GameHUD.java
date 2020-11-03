@@ -33,6 +33,13 @@ public class GameHUD {
         this.playerInfo[1] = new BufferedImage(infoWidth, height, BufferedImage.TYPE_INT_RGB);
     }
 
+    void reset() {
+        this.playerScore[0] = 0;
+        this.playerScore[1] = 0;
+        level = 1;
+        this.matchSet = false;
+    }
+
     int getLevel() {
         return level;
     }
@@ -70,6 +77,22 @@ public class GameHUD {
                 if (this.players[i].isDead()) {
                     deadPlayers++;
                 }
+                // ăn portal
+                if(this.players[i].isSupreme()) {
+                    for (int index = 0; index < this.players.length; index++) {
+                        if (!this.players[index].isDead() && index != i) {
+                            this.players[index].setDead();
+                        }
+                        else if (!this.players[index].isDead() && index == i) {
+                            this.playerScore[index] += 200;
+                        }
+                    }
+                    this.matchSet = true;
+                    level++;
+                    //this.players[i].setSupreme(false);
+                    break;
+                }
+
             }
 
             // Check for the last player standing and conclude the match
@@ -88,6 +111,7 @@ public class GameHUD {
                 // This should only be reached two or more of the last players die at the same time
                 this.matchSet = true;
             }
+
         } catch (Exception e) {
             System.out.println("Loi nhieu qua");
         }

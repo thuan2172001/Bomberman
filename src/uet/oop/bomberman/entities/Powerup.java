@@ -1,5 +1,7 @@
 package uet.oop.bomberman.entities;
 
+import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
+
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
@@ -8,6 +10,7 @@ import java.util.Random;
 public class Powerup extends TileObject {
 
     public enum Type {
+        //0
         // Bổ sung số lượng bomb
         Bomb(ResourceCollection.Images.POWER_BOMB.getImage()) {
             @Override
@@ -16,6 +19,7 @@ public class Powerup extends TileObject {
             }
         },
 
+        //1
         // Bổ sung sức nổ bomb + 1
         Fireup(ResourceCollection.Images.POWER_FIREUP.getImage()) {
             @Override
@@ -24,38 +28,7 @@ public class Powerup extends TileObject {
             }
         },
 
-        // Tăng sức nổ bomb tối đa (6)
-        Firemax(ResourceCollection.Images.POWER_FIREMAX.getImage()) {
-            @Override
-            protected void grantBonus(Bomber bomber) {
-                bomber.addFirepower(6);
-            }
-        },
-
-        // Tăng tốc độ lên 0.5
-        Speed(ResourceCollection.Images.POWER_SPEED.getImage()) {
-            @Override
-            protected void grantBonus(Bomber bomber) {
-                bomber.addSpeed(0.5f);
-            }
-        },
-
-        // Kích hoạt khả năng xuyên vật thể mềm
-        Pierce(ResourceCollection.Images.POWER_PIERCE.getImage()) {
-            @Override
-            protected void grantBonus(Bomber bomber) {
-                bomber.setPierce(true);
-            }
-        },
-
-        // Kích hoạt khả năng đá bomb
-        Kick(ResourceCollection.Images.POWER_KICK.getImage()) {
-            @Override
-            protected void grantBonus(Bomber bomber) {
-                bomber.setKick(true);
-            }
-        },
-
+        //2
         // Giảm thời gian bomb nổ đi 0.15s
         Timer(ResourceCollection.Images.POWER_TIMER.getImage()) {
             @Override
@@ -64,10 +37,47 @@ public class Powerup extends TileObject {
             }
         },
 
+        //3
+        // Tăng tốc độ lên 0.5
+        Speed(ResourceCollection.Images.POWER_SPEED.getImage()) {
+            @Override
+            protected void grantBonus(Bomber bomber) {
+                bomber.addSpeed(0.5f);
+            }
+        },
+
+        //4
+        // Kích hoạt khả năng xuyên vật thể mềm
+        Pierce(ResourceCollection.Images.POWER_PIERCE.getImage()) {
+            @Override
+            protected void grantBonus(Bomber bomber) {
+                bomber.setPierce(true);
+            }
+        },
+
+        //5
+        // Kích hoạt khả năng đá bomb
+        Kick(ResourceCollection.Images.POWER_KICK.getImage()) {
+            @Override
+            protected void grantBonus(Bomber bomber) {
+                bomber.setKick(true);
+            }
+        },
+
+        //6
+        // Tăng sức nổ bomb tối đa (6)
+        Firemax(ResourceCollection.Images.POWER_FIREMAX.getImage()) {
+            @Override
+            protected void grantBonus(Bomber bomber) {
+                bomber.addFirepower(6);
+            }
+        },
+
+        //7
         Portal(ResourceCollection.Images.PORTAL.getImage()) {
             @Override
             protected void grantBonus(Bomber bomber) {
-                System.out.println("map tang 1");
+                bomber.setSupreme(true);
             }
         }
         ;
@@ -109,8 +119,18 @@ public class Powerup extends TileObject {
     private static Powerup.Type[] powerups = Powerup.Type.values();
     private static Random random = new Random();
     static final Powerup.Type randomPower() {
+        float randomStrongPowerUpRate = (float) Math.random();
         // if(quái chết hết) return powerups[powerups.length - 1]; // tạo ra PORTAL
-        return powerups[random.nextInt(powerups.length - 1)]; // không random ra PORTAL
+        // return powerups[random.nextInt(powerups.length - 1)]; // không random ra PORTAL
+        // tỉ lệ ra đồ khỏe < 0.05
+        System.out.println(randomStrongPowerUpRate);
+        if (randomStrongPowerUpRate < 0.05) {
+            float randomPortal = (float) Math.random();
+            System.out.println(randomPortal);
+            if (randomPortal < 0.5) return powerups[7];
+            else return powerups[6];
+        }
+        else return powerups[random.nextInt(powerups.length - 2)]; // random 0 có PORTAL và FireMax
     }
 
     /**

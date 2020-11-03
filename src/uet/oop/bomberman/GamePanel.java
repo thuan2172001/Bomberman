@@ -13,6 +13,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 /**
  * JPanel chứa toàn bộ trò chơi và logic vòng lặp trò chơi.
@@ -42,6 +44,10 @@ public class GamePanel extends JPanel implements Runnable {
     private HashMap<Integer, Key> controls2;
 
     private static final double SOFTWALL_RATE = 0.825;
+
+    public static BufferedImage[] SoftWall = {
+            ResourceCollection.Images.SOFT_WALL.getImage(),
+            ResourceCollection.Images.BOX1.getImage(), ResourceCollection.Images.BOX2.getImage()};
 
     /**
      * Khởi tạo bảng điều khiển trò chơi và tải trong một tệp bản đồ.
@@ -113,7 +119,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     /**
      * Tạo bản đồ cho tệp bản đồ. Bản đồ dạng lưới và mỗi ô có kích thước 32x32.
-     * Tạo các đối tượng trò chơi tùy thuộc vào kí tự trong file.
+     * Tạo các đối tượng trò chơi tùy thuộc vào kí tự trong file. id từ 0 - 9
      */
     private void generateMap(int id) {
         // Kích thước map
@@ -131,7 +137,7 @@ public class GamePanel extends JPanel implements Runnable {
                 switch (mapLayout.get(y).get(x)) {
                     case ("S"):     // Soft wall; breakable
                         if (Math.random() < SOFTWALL_RATE) {
-                            BufferedImage sprSoftWall = ResourceCollection.Images.SOFT_WALL.getImage();
+                            BufferedImage sprSoftWall = SoftWall[(new Random().nextInt(3))];
                             Wall softWall = new Wall(new Point2D.Float(x * 32, y * 32), sprSoftWall, true);
                             GameObjectCollection.spawn(softWall);
                         }
@@ -214,6 +220,13 @@ public class GamePanel extends JPanel implements Runnable {
                         Powerup portal = new Powerup(new Point2D.Float(x * 32, y * 32), Powerup.Type.Portal);
                         GameObjectCollection.spawn(portal);
                         break;
+
+                    case ("R"):    // Rose
+                        BufferedImage sprSoftWall = ResourceCollection.Images.ROSE.getImage();
+                        Wall softWall = new Wall(new Point2D.Float(x * 32, y * 32), sprSoftWall, true);
+                        GameObjectCollection.spawn(softWall);
+                        break;
+
                     default:
                         break;
                 }
@@ -259,7 +272,7 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     /**
-     * Reset map, điểm và level vẫn giữ.
+     * Reset map, điểm và level vẫn giữ. id từ 0 - 9.
      */
     private void resetMap(int id) {
         int real_id = id % 10;
@@ -348,7 +361,7 @@ public class GamePanel extends JPanel implements Runnable {
                         }
                         objIndex++;
                     } catch (Exception e) {
-                        System.out.println("Lai loi ");
+                        System.out.println("Lai loi");
                     }
                 }
             }
@@ -360,11 +373,25 @@ public class GamePanel extends JPanel implements Runnable {
         if (!this.gameHUD.matchSet) {
             this.gameHUD.updateScore();
         } else {
-            // Checking size of array list because when a bomber dies, they do not immediately get deleted
-            // This makes it so that the next round doesn't start until the winner is the only bomber object on the map
-            if (GameObjectCollection.bomberObjects.size() <= 1) {
+            boolean checkSupreme = false;
+            for (Bomber bomber : GameObjectCollection.bomberObjects) {
+                if (bomber.isSupreme()) {
+                    checkSupreme = true;
+                    break;
+                }
+            }
+            // ĂN PORTAL
+            if (GameObjectCollection.bomberObjects.size() == 1 && checkSupreme) {
                 this.resetMap(this.gameHUD.getLevel() - 1);
                 this.gameHUD.matchSet = false;
+                System.out.println("an portal");
+            }
+            // Checking size of array list because when a bomber dies, they do not immediately get deleted
+            // This makes it so that the next round doesn't start until the winner is the only bomber object on the map
+            else if (GameObjectCollection.bomberObjects.size() == 1 && !checkSupreme) {
+                this.resetMap(0);
+                this.gameHUD.reset();
+                System.out.println("ko an portal");
             }
         }
 
