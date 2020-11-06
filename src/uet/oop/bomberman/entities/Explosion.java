@@ -118,6 +118,10 @@ public abstract class Explosion extends Entity {
             return spriteAnimation;
         }
 
+        @Override
+        protected void handleCollision(Monster monster) {
+
+        }
     }
 
     /**
@@ -223,6 +227,10 @@ public abstract class Explosion extends Entity {
             return spriteAnimation;
         }
 
+        @Override
+        protected void handleCollision(Monster monster) {
+
+        }
     }
 
 

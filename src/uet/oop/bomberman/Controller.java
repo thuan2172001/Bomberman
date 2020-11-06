@@ -12,8 +12,7 @@ public class Controller {
 
     static GameWindow window;
 
-    public void startgame(ActionEvent actionEvent) throws Exception {
-
+    public void startgame() throws Exception {
         ResourceCollection.readFiles();
         ResourceCollection.init();
         GamePanel game;
@@ -27,9 +26,7 @@ public class Controller {
             e.printStackTrace();
         }
 
-
         window = new GameWindow(game);
-
         System.gc();
     }
 }

@@ -44,7 +44,8 @@ public class ResourceCollection {
         BOMB_PIERCE,
         FIRE_MONSTER,
         DRAGON_MONSTER,
-        EXPLOSION_SPRITEMAP;
+        EXPLOSION_SPRITEMAP,
+        CACTUS;
 
         private BufferedImage image = null;
         private BufferedImage[][] sprites = null;
@@ -107,6 +108,7 @@ public class ResourceCollection {
             SpriteMaps.EXPLOSION_SPRITEMAP.image = ImageIO.read(ResourceCollection.class.getResource("/textures/explosion.png"));
             SpriteMaps.DRAGON_MONSTER.image = ImageIO.read(ResourceCollection.class.getResource("/textures/dragonMonster.png"));
             SpriteMaps.FIRE_MONSTER.image = ImageIO.read(ResourceCollection.class.getResource("/textures/fireMonster.png"));
+            SpriteMaps.CACTUS.image = ImageIO.read(ResourceCollection.class.getResource("/textures/cactus.png"));
 
 
             Files.MAP1.file = new InputStreamReader(ResourceCollection.class.getResourceAsStream("/textures/maps/level1.csv"));
@@ -139,6 +141,7 @@ public class ResourceCollection {
         SpriteMaps.BOMB.sprites = sliceSpriteMap(SpriteMaps.BOMB.image, 32, 32);
         SpriteMaps.BOMB_PIERCE.sprites = sliceSpriteMap(SpriteMaps.BOMB_PIERCE.image, 32, 32);
         SpriteMaps.EXPLOSION_SPRITEMAP.sprites = sliceSpriteMap(SpriteMaps.EXPLOSION_SPRITEMAP.image, 32, 32);
+        SpriteMaps.CACTUS.sprites = sliceSpriteMap(SpriteMaps.CACTUS.image, 32, 48);
         loadHardWallTiles(SpriteMaps.HARD_WALLS.sprites);   // Load hard wall tiles into hashmap for bit masking
     }
 

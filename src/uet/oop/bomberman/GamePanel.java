@@ -177,8 +177,15 @@ public class GamePanel extends JPanel implements Runnable {
                         Bomber player2 = new Bomber(new Point2D.Float(x * 32, y * 32 - 16), sprMapP2);
                         PlayerController playerController2 = new PlayerController(player2, this.controls2);
                         this.addKeyListener(playerController2);
-                        this.gameHUD.assignPlayer(player2, 1);
+                        this.gameHUD.assignPlayer(player2, 1);// gameHub dieu khien diem level
                         GameObjectCollection.spawn(player2);
+                        break;
+
+                    case ("AIC"):    // Monster
+                        BufferedImage[][] monsterMap = ResourceCollection.SpriteMaps.CACTUS.getSprites();
+                        Monster monster = new Monster(new Point2D.Float(x * 32, y * 32 - 16), monsterMap);
+                        this.gameHUD.assignMonster(monster, 0);
+                        GameObjectCollection.spawn(monster);
                         break;
 
                     case ("PB"):    // Powerup Bomb
@@ -380,15 +387,27 @@ public class GamePanel extends JPanel implements Runnable {
                     break;
                 }
             }
-            // ĂN PORTAL
-            if (GameObjectCollection.bomberObjects.size() == 1 && checkSupreme) {
-                this.resetMap(this.gameHUD.getLevel() - 1);
+            
+            // ĂN PORTAL // bây giờ khi ăn portal thì m phải set quái.dead = true, thằng người thứ 2 chết nốt//
+            // tại sao chuyển map mà thì cả 2 bomber chuyển confquasi reset chứ?
+            // đkien để rết là 1 thằng bomber 2 chết(game 1 người) nma day la gmae 2 nguoi ma
+            // :> thế thì ăn portal quái chết hết, m tự viết lại đkien kiểm tra monsterObject == null thì chuyển map
+            // còn 1 trong 2 thằng bomber dead thì thua
+            // ủa chứ ý m ban đầu 1 thằng ăn portal thì thắng luôn à mà thằng 2 với quái chết, ừ
+            // mày chơi game nào mà như thế :/ như bản này ăn portal 2 bomber vẫn ra 1 level khác mà, ừ, ý tao là
+            // đkien hiện tại để chuyển map là 1 thằng bomber phải chết, nên tao cứ cho chết rồi hồi sinh
+            // thế cũng được rồi cộng vào điểm ban đầu ?? ừ hết chưa hết ròi
+
+
+            if (GameObjectCollection.bomberObjects.size() == 2 && checkSupreme) {
+                this.resetMap(this.gameHUD.getLevel());
                 this.gameHUD.matchSet = false;
                 System.out.println("an portal");
             }
             // Checking size of array list because when a bomber dies, they do not immediately get deleted
             // This makes it so that the next round doesn't start until the winner is the only bomber object on the map
             else if (GameObjectCollection.bomberObjects.size() == 1 && !checkSupreme) {
+
                 this.resetMap(0);
                 this.gameHUD.reset();
                 System.out.println("ko an portal");

@@ -51,4 +51,8 @@ public class Wall extends TileObject {
         return this.breakable;
     }
 
+    @Override
+    protected void handleCollision(Monster collidingObj) {
+
+    }
 }

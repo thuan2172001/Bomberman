@@ -15,6 +15,10 @@ public abstract class Entity implements Observable, Collidable {
     float rotation;
     float width;
     float height;
+    boolean solidRight;
+    boolean solidLeft;
+    boolean solidUp;
+    boolean solidDown;
 
     // Thuộc tính bị phá hủy (Dùng để phá hủy hoạt ảnh)
     private boolean destroyed;
@@ -29,6 +33,10 @@ public abstract class Entity implements Observable, Collidable {
         this.position = new Point2D.Float(position.x, position.y);
         this.rotation = 0;
         this.collider = new Rectangle2D.Float(position.x, position.y, this.width, this.height);
+        this.solidDown = false;
+        this.solidLeft = false;
+        this.solidRight = false;
+        this.solidUp = false;
     }
 
     private Entity(BufferedImage sprite) {
@@ -56,10 +64,12 @@ public abstract class Entity implements Observable, Collidable {
             // From the top
             if (intersection.getMaxY() >= this.collider.getMaxY()) {
                 this.position.setLocation(this.position.x, this.position.y - intersection.getHeight());
+                this.solidUp = true;
             }
             // From the bottom
             if (intersection.getMaxY() >= obj.collider.getMaxY()) {
                 this.position.setLocation(this.position.x, this.position.y + intersection.getHeight());
+                this.solidDown = true;
             }
 
             // Smoothing around corners
@@ -78,10 +88,12 @@ public abstract class Entity implements Observable, Collidable {
             // From the left
             if (intersection.getMaxX() >= this.collider.getMaxX()) {
                 this.position.setLocation(this.position.x - intersection.getWidth(), this.position.y);
+                this.solidLeft = true;
             }
             // From the right
             if (intersection.getMaxX() >= obj.collider.getMaxX()) {
                 this.position.setLocation(this.position.x + intersection.getWidth(), this.position.y);
+                this.solidRight = true;
             }
 
             // Smoothing around corners
@@ -132,6 +144,8 @@ public abstract class Entity implements Observable, Collidable {
     public int compareTo(Entity o) {
         return Float.compare(this.position.y, o.position.y);
     }
+
+    protected abstract void handleCollision(Monster monster);
 }
 
 /**

@@ -172,6 +172,10 @@ public class Bomb extends TileObject {
         return this.breakable;
     }
 
+    @Override
+    protected void handleCollision(Monster monster) {
+
+    }
 }
 
 /**

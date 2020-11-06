@@ -9,6 +9,11 @@ import java.util.Random;
 
 public class Powerup extends TileObject {
 
+    @Override
+    protected void handleCollision(Monster monster) {
+
+    }
+
     public enum Type {
         //0
         // Bổ sung số lượng bomb

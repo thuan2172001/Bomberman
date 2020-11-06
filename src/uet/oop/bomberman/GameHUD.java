@@ -1,6 +1,8 @@
 package uet.oop.bomberman;
 
 import uet.oop.bomberman.entities.Bomber;
+import uet.oop.bomberman.entities.Monster;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
@@ -10,14 +12,18 @@ import java.awt.image.BufferedImage;
 public class GameHUD {
 
     private Bomber[] players;
+    private Monster[] monsters;
     private BufferedImage[] playerInfo;
+    private BufferedImage[] monsterInfo;
     private int[] playerScore;
     boolean matchSet;
     private int level;
 
     GameHUD() {
         this.players = new Bomber[2];
+        this.monsters = new Monster[5];
         this.playerInfo = new BufferedImage[2];
+        this.monsterInfo = new BufferedImage[1];
         this.playerScore = new int[2];
         this.matchSet = false;
         this.level = 1;
@@ -53,6 +59,9 @@ public class GameHUD {
     BufferedImage getP2info() {
         return this.playerInfo[1];
     }
+    BufferedImage getM1info() {
+        return this.monsterInfo[0];
+    }
 
     /**
      * Assign an info box to a player that shows the information on this player.
@@ -61,6 +70,9 @@ public class GameHUD {
      */
     void assignPlayer(Bomber player, int playerID) {
         this.players[playerID] = player;
+    }
+    void assignMonster(Monster monster, int monsterID) {
+        this.monsters[monsterID] = monster;
     }
 
     /**
@@ -80,20 +92,22 @@ public class GameHUD {
                 // ăn portal
                 if(this.players[i].isSupreme()) {
                     for (int index = 0; index < this.players.length; index++) {
-                        if (!this.players[index].isDead() && index != i) {
-                            this.players[index].setDead();
+//                        if (!this.players[index].isDead() && index != i) {
+//                            this.players[index].setDead();
+//                        }
+//                        else{
+                            if (!this.players[index].isDead() && index == i) {
+                                this.playerScore[index] += 200;
+                            }
                         }
-                        else if (!this.players[index].isDead() && index == i) {
-                            this.playerScore[index] += 200;
+                                this.matchSet = true;
+                                level++;
+                                //this.players[i].setSupreme(false);
+                                break;
+                            }
                         }
-                    }
-                    this.matchSet = true;
-                    level++;
-                    //this.players[i].setSupreme(false);
-                    break;
-                }
 
-            }
+//            }
 
             // Check for the last player standing and conclude the match
             if (deadPlayers == this.players.length - 1) {
@@ -134,6 +148,7 @@ public class GameHUD {
         playerGraphics[0].setColor(Color.WHITE);    // Player 1 info box border color
         playerGraphics[1].setColor(Color.GRAY);     // Player 2 info box border color
 
+
         // Iterate loop for each player
         for (int i = 0; i < playerGraphics.length; i++) {
             Font font = new Font("Courier New", Font.BOLD, 24);
@@ -146,8 +161,7 @@ public class GameHUD {
             playerGraphics[i].setColor(Color.WHITE);
             playerGraphics[i].drawString("Score: " + this.playerScore[i],
                     this.playerInfo[i].getWidth() / 2 - 140, 32);
-
-            playerGraphics[i].drawString("Level: " + this.level,
+            playerGraphics[i].drawString("Level: " + this.level ,
                     this.playerInfo[i].getWidth() / 2 + 45, 32);
 
 

@@ -241,6 +241,7 @@ public class Bomber extends Player {
         }
     }
 
+
     /**
      * Bombs act as walls if the bomber is not already within the a certain distance as the bomb.
      * This is also the big and ugly kicking logic. Touching this code is very dangerous and can introduce
@@ -292,4 +293,14 @@ public class Bomber extends Player {
         collidingObj.destroy();
     }
 
+    /**
+     * Xử lí va chạm với Monster
+     */
+    @Override
+    public void handleCollision(Monster collidingObj) {
+        if(!this.dead) {
+            this.dead = true;
+            this.spriteIndex = 0;
+        }
+    }
 }
