@@ -1,0 +1,24 @@
+1 : người chơi 1
+2 : người chơi 2
+S : hộp (có thể phá)
+H : tường cứng (không thể phá)
+PB : tăng lượng bomb
+PU : tăng sức công phá
+PM : tăng sức công phá max
+PS : tăng tốc độ
+PP : kích hoạt xuyên
+PK : khả năng sút
+PT : giảm thời gian bomb nổ
+P : cổng không gian
+R : Hoa (có thể phá)
+W : water (không thể phá)
+LV : dung nham (không thể phá)
+TR : cây (không thể phá)
+STR: cây map băng (không thể phá)
+AIC : cactus (quái)
+WF : waterfall (không thể phá)
+SKE : rương kho báu (không thể phá)
+PZ 1-4 : pizza 1-4
+CR 1-4 : creepy 1-4
+AIDR : Dragon (quái)
+CD 1-4 : candy 1-4
