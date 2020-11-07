@@ -7,9 +7,8 @@ import java.io.IOException;
 
 public class Sound {
     public static String EXPLORE = "/textures/Explosion.wav";
-    public static String DEAD = "/textures/background.wav";
-    public static String WIN = "/textures/background.wav";
-    public static String LOSE = "/textures/background.wav";
+    public static String DEAD = "/textures/lose.wav";
+    public static String LEVELUP = "/textures/levelup.wav";
     public static String BACKGROUND = "/textures/background.wav";
     public static String[] BACKGROUNDMUSIC = {"/textures/background.wav", "/textures/muathutrongmatem.wav"};
 

@@ -19,7 +19,8 @@ public class ResourceCollection {
         BACKGROUND, BLOCKTILE, SNOWTILE, PALACETILE, BISCUIT1, BISCUIT2,
         FOOD0, FOOD1, FOOD2, FOOD3,
         CANDY0, CANDY1, CANDY2, CANDY3,
-        BOX0, BOX1, BOX2, BOX3, BOX4, BOX5, BOX6, BOX7, ROSE,
+        BOX0, BOX1, BOX2, BOX3, BOX4, BOX5, BOX6, BOX7, BOX8, BOX9, BOX10,
+        ROSE,
         PIZZA1, PIZZA2, PIZZA3, PIZZA4,
         TREE, SNOWTREE, WATER, LAVA, CREEPY1, CREEPY2, CREEPY3, CREEPY4,
         SKE,
@@ -108,6 +109,9 @@ public class ResourceCollection {
             Images.BOX5.image = ImageIO.read(ResourceCollection.class.getResource("/textures/box5.png"));
             Images.BOX6.image = ImageIO.read(ResourceCollection.class.getResource("/textures/box6.png"));
             Images.BOX7.image = ImageIO.read(ResourceCollection.class.getResource("/textures/box7.png"));
+            Images.BOX8.image = ImageIO.read(ResourceCollection.class.getResource("/textures/box8.png"));
+            Images.BOX9.image = ImageIO.read(ResourceCollection.class.getResource("/textures/box9.png"));
+            Images.BOX10.image = ImageIO.read(ResourceCollection.class.getResource("/textures/box10.png"));
 
             Images.ROSE.image = ImageIO.read(ResourceCollection.class.getResource("/textures/rose.png"));
             Images.TREE.image = ImageIO.read(ResourceCollection.class.getResource("/textures/tree.png"));

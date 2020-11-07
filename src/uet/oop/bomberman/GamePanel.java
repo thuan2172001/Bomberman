@@ -16,11 +16,14 @@ import java.util.HashMap;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
+import static uet.oop.bomberman.entities.GameObjectCollection.monsterObjects;
+
 /**
  * JPanel chứa toàn bộ trò chơi và logic vòng lặp trò chơi.
  */
 public class GamePanel extends JPanel implements Runnable {
 
+    public static final int MAX_LEVEL = 10;
     // Screen size is determined by the map size
     static int panelWidth;
     static int panelHeight;
@@ -43,7 +46,9 @@ public class GamePanel extends JPanel implements Runnable {
     private HashMap<Integer, Key> controls1;
     private HashMap<Integer, Key> controls2;
 
-    private static final double SOFTWALL_RATE = 0.65;
+    private int keyGen;
+
+    private static final double SOFTWALL_RATE = 0.5;
 
     public static BufferedImage[] SoftWall = {
             ResourceCollection.Images.BOX0.getImage(), ResourceCollection.Images.BOX1.getImage(),
@@ -52,15 +57,15 @@ public class GamePanel extends JPanel implements Runnable {
     };
 
     BufferedImage[] getSoftWall(int id) {
-        if (id == 0)
+        if (id % 5 == 0)
             return new BufferedImage[]{ResourceCollection.Images.BOX0.getImage(), ResourceCollection.Images.BOX1.getImage()};
-        else if (id == 1)
+        else if (id % 5 == 1)
             return new BufferedImage[]{ResourceCollection.Images.BOX2.getImage(), ResourceCollection.Images.BOX3.getImage()};
         else if (id == 2)
             return new BufferedImage[]{ResourceCollection.Images.BOX4.getImage(), ResourceCollection.Images.BOX5.getImage()};
         else if (id == 3)
             return new BufferedImage[]{ResourceCollection.Images.BOX6.getImage(), ResourceCollection.Images.BOX7.getImage()};
-        else if (id == 4)
+        else if (id % 5 == 4)
             return new BufferedImage[]{ResourceCollection.Images.FOOD0.getImage(), ResourceCollection.Images.FOOD1.getImage(),
                     ResourceCollection.Images.FOOD2.getImage(), ResourceCollection.Images.FOOD3.getImage()};
         else return SoftWall;
@@ -72,6 +77,7 @@ public class GamePanel extends JPanel implements Runnable {
         this.setFocusable(true);
         this.requestFocus();
         this.setControls();
+        this.setKeyGen();
         this.bg = ResourceCollection.Images.BACKGROUND.getImage();
         this.loadMapFile();
         this.addKeyListener(new GameController(this));
@@ -144,11 +150,13 @@ public class GamePanel extends JPanel implements Runnable {
         this.mapHeight = mapLayout.size();
         panelWidth = this.mapWidth * 32;
         panelHeight = this.mapHeight * 32;
-        if (id == 1) this.bg = ResourceCollection.Images.BLOCKTILE.getImage(); // doi glass sang gach Map thu 2
+        if (id % 5 == 0) this.bg = ResourceCollection.Images.BACKGROUND.getImage();
+        else if (id % 5 == 1) this.bg = ResourceCollection.Images.BLOCKTILE.getImage(); // doi glass sang gach Map thu 2
         else if (id == 2) this.bg = ResourceCollection.Images.SNOWTILE.getImage();
         else if (id == 3) this.bg = ResourceCollection.Images.PALACETILE.getImage();
-        else if (id == 4) this.bg = ResourceCollection.Images.BISCUIT1.getImage();
+        else if (id % 5 == 4) this.bg = ResourceCollection.Images.BISCUIT1.getImage();
         else this.bg = ResourceCollection.Images.BACKGROUND.getImage();
+        // tạo ra 1 ảnh chứa toàn bộ map
         this.world = new BufferedImage(this.mapWidth * 32, this.mapHeight * 32, BufferedImage.TYPE_INT_RGB);
 
         // tạo toàn bộ map
@@ -178,7 +186,7 @@ public class GamePanel extends JPanel implements Runnable {
                         if (x < this.mapWidth - 1 && mapLayout.get(y).get(x + 1).equals("H")) {
                             code += 2;  // East-Đông
                         }
-                        BufferedImage sprHardWall = ResourceCollection.getHardWallTile(code);
+                        BufferedImage sprHardWall = ResourceCollection.getHardWallTile(0b0000);
                         Wall hardWall = new Wall(new Point2D.Float(x * 32, y * 32), sprHardWall, false);
                         GameObjectCollection.spawn(hardWall);
                         break;
@@ -192,25 +200,30 @@ public class GamePanel extends JPanel implements Runnable {
                         GameObjectCollection.spawn(player1);
                         break;
 
-                        /*
                     case ("2"):     // Player 2; Bomber
                         BufferedImage[][] sprMapP2 = ResourceCollection.SpriteMaps.PLAYER_2.getSprites();
-                        Bomber player2 = new Bomber(new Point2D.Float(x * 32, y * 32 - 16), sprMapP2);
+                        sprMapP2[1][0] = this.createBaseOnMap(id);
+                        Bomber player2 = new Bomber(new Point2D.Float(x * 32, y * 32), sprMapP2);
                         PlayerController playerController2 = new PlayerController(player2, this.controls2);
-                        this.addKeyListener(playerController2);
+                        //this.addKeyListener(playerController2);
                         this.gameHUD.assignPlayer(player2, 1);
                         GameObjectCollection.spawn(player2);
                         break;
 
-                         */
-
                     case ("AIC"):     // AI; Cactus
-                        BufferedImage[][] sprMapP2 = ResourceCollection.SpriteMaps.CACTUS.getSprites();
-                        Bomber player2 = new Bomber(new Point2D.Float(x * 32, y * 32 - 16), sprMapP2);
-                        PlayerController playerController2 = new PlayerController(player2, this.controls2);
-                        this.addKeyListener(playerController2);
-                        this.gameHUD.assignPlayer(player2, 1);
-                        GameObjectCollection.spawn(player2);
+                        BufferedImage[][] sprMapM1 = ResourceCollection.SpriteMaps.CACTUS.getSprites();
+                        Monster monster1 = new Monster(new Point2D.Float(x * 32, y * 32 - 16), sprMapM1);
+                        MonsterController monsterController1 = new MonsterController(monster1);
+                        //this.addAI(monsterController1);
+                        GameObjectCollection.spawn(monster1);
+                        break;
+
+                    case ("AIDR"):     // AI; Dragon
+                        BufferedImage[][] sprMapM2 = ResourceCollection.SpriteMaps.DRAGON_MONSTER.getSprites();
+                        Monster monster2 = new Monster(new Point2D.Float(x * 32, y * 32 - 16), sprMapM2);
+                        MonsterController monsterController2 = new MonsterController(monster2);
+                        //this.addAI(monsterController1);
+                        GameObjectCollection.spawn(monster2);
                         break;
 
                     case ("PB"):    // Powerup Bomb
@@ -362,6 +375,12 @@ public class GamePanel extends JPanel implements Runnable {
         }
     }
 
+    private BufferedImage createBaseOnMap(int id) {
+        if (id == 1 || id == 6) return ResourceCollection.Images.LAVA.getImage();
+        else if (id == 7) return ResourceCollection.Images.WATER.getImage();
+        else return ResourceCollection.getHardWallTile(0b0000);
+    }
+
     /**
      * Tạo key điều khiển cho người chơi.
      */
@@ -385,6 +404,10 @@ public class GamePanel extends JPanel implements Runnable {
 
     }
 
+    private void setKeyGen() {
+        this.keyGen = (int) (Math.random() * 3);
+    }
+
     /**
      * ESC tắt game
      */
@@ -400,8 +423,14 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     void nextMap() {
-        this.gameHUD.setLevel(this.gameHUD.getLevel() + 1);
-        this.resetMap(this.gameHUD.getLevel() - 1);
+        if (this.gameHUD.getLevel() < 10) {
+            this.gameHUD.setLevel(this.gameHUD.getLevel() + 1);
+            this.resetMap(this.gameHUD.getLevel() - 1);
+        }
+        else {
+            System.out.println("You win!");
+            this.exit();
+        }
     }
 
     /**
@@ -520,6 +549,7 @@ public class GamePanel extends JPanel implements Runnable {
             }
             // ĂN PORTAL
             if (GameObjectCollection.bomberObjects.size() == 1 && checkSupreme) {
+                for (Monster monster : monsterObjects) monster.setDead();
                 this.resetMap(this.gameHUD.getLevel() - 1);
                 this.gameHUD.matchSet = false;
                 System.out.println("an portal");
@@ -545,9 +575,9 @@ public class GamePanel extends JPanel implements Runnable {
     @Override
     public void paintComponent(Graphics g) {
         Graphics2D g2 = (Graphics2D) g;
-        this.buffer = this.world.createGraphics();
+        this.buffer = this.world.createGraphics(); // tao graphics2D
         this.buffer.clearRect(0, 0, this.world.getWidth(), this.world.getHeight());
-        super.paintComponent(g2);
+        //super.paintComponent(g2);
 
         this.gameHUD.drawHUD();
 

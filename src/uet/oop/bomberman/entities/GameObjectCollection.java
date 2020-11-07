@@ -12,6 +12,7 @@ public class GameObjectCollection {
     public static ArrayList<TileObject> tileObjects;
     public static ArrayList<Explosion> explosionObjects;
     public static ArrayList<Bomber> bomberObjects;
+    public static ArrayList<Monster> monsterObjects;
 
     /**
      * Khởi tạo các mảng sẽ chứa tất cả các đối tượng trò chơi.
@@ -21,10 +22,12 @@ public class GameObjectCollection {
         tileObjects = new ArrayList<>();
         explosionObjects = new ArrayList<>();
         bomberObjects = new ArrayList<>();
+        monsterObjects = new ArrayList<>();
 
         gameObjects.add(tileObjects);
         gameObjects.add(explosionObjects);
         gameObjects.add(bomberObjects);
+        gameObjects.add(monsterObjects);
     }
 
     /**
@@ -40,6 +43,9 @@ public class GameObjectCollection {
     public static void spawn(Bomber spawnObj) {
         bomberObjects.add(spawnObj);
     }
+    public static void spawn(Monster spawnObj) {
+        monsterObjects.add(spawnObj);
+    }
 
     /**
      * Sắp xếp danh sách đối tượng theo vị trí y. Dùng để vẽ các đối tượng theo thứ tự vị trí y.
@@ -52,6 +58,9 @@ public class GameObjectCollection {
     }
     public static void sortBomberObjects() {
         bomberObjects.sort(Comparator.comparing(Entity::getPositionY));
+    }
+    public static void sortMonsterObjects() {
+        monsterObjects.sort(Comparator.comparing(Entity::getPositionY));
     }
 
 }

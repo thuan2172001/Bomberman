@@ -14,6 +14,7 @@ public class Monster extends Player {
     private int spriteIndex;
     private int spriteTimer;
     private String typeMonster;
+    private static int keyMove;
 
     public Monster(Point2D.Float position, BufferedImage[][] spriteMap) {
         super(position, spriteMap[1][0]);
@@ -26,6 +27,7 @@ public class Monster extends Player {
         this.spriteIndex = 0;
         this.spriteTimer = 0;
         this.moveSpeed = 1;
+        this.keyMove = 0;
     }
 
     public void setMoveSpeed(int moveSpeed) {
@@ -73,6 +75,7 @@ public class Monster extends Player {
      */
     @Override
     public void update() {
+        this.AutoMove();
         this.collider.setRect(this.position.x + 3, this.position.y + 16 + 3,
                 this.width - 6, this.height - 16 - 6);
 
@@ -118,8 +121,24 @@ public class Monster extends Player {
                 }
             }
         }
+        this.UnMove();
     }
 
+    @Override
+    public void AutoMove() {
+        if (keyMove == 0) { // xuống
+            this.toggleDownPressed();
+        }
+        if (keyMove == 1) { // lên
+            this.toggleUpPressed();
+        }
+        if (keyMove == 2) { // trái
+            this.toggleLeftPressed();
+        }
+        if (keyMove == 3) { // phải
+            this.toggleRightPressed();
+        }
+    }
 
     @Override
     public void onCollisionEnter(Entity collidingObj) {
@@ -134,6 +153,16 @@ public class Monster extends Player {
     @Override
     public void handleCollision(Wall collidingObj) {
         this.solidCollision(collidingObj);
+        if (keyMove == 0) {
+            keyMove = 3;
+        }
+        else if (keyMove == 1) {
+            keyMove = 2;
+        }
+        else if (keyMove == 2) {
+            keyMove = 0;
+        }
+        else keyMove = 1;
     }
 
     @Override
