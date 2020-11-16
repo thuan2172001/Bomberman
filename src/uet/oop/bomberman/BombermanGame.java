@@ -25,7 +25,7 @@ public class BombermanGame {
 
         Sound s = new Sound();
         try {
-            s.play(s.BACKGROUNDMUSIC[1], 3);
+            s.play(Sound.BACKGROUNDMUSIC[1], 3);
         }
         catch (Exception e) {
             e.printStackTrace();

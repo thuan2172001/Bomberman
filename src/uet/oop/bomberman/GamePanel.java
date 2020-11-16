@@ -1,5 +1,11 @@
 package uet.oop.bomberman;
 
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 import uet.oop.bomberman.entities.*;
 import javax.swing.*;
 import javax.swing.table.JTableHeader;
@@ -16,6 +22,7 @@ import java.util.HashMap;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
+import static uet.oop.bomberman.entities.GameObjectCollection.bomberObjects;
 import static uet.oop.bomberman.entities.GameObjectCollection.monsterObjects;
 
 /**
@@ -200,9 +207,13 @@ public class GamePanel extends JPanel implements Runnable {
                         GameObjectCollection.spawn(player1);
                         break;
 
-                    case ("2"):     // Player 2; Bomber
+                    case ("2"):     // Player 2; Bomber bị giấu
                         BufferedImage[][] sprMapP2 = ResourceCollection.SpriteMaps.PLAYER_2.getSprites();
-                        sprMapP2[1][0] = this.createBaseOnMap(id);
+                        for (int BI1 = 0; BI1 < sprMapP2.length; BI1++) {
+                            for (int BI2 = 0; BI2 < sprMapP2[0].length; BI2++) {
+                                sprMapP2[BI1][BI2] = this.createBaseOnMap(id);
+                            }
+                        }
                         Bomber player2 = new Bomber(new Point2D.Float(x * 32, y * 32), sprMapP2);
                         PlayerController playerController2 = new PlayerController(player2, this.controls2);
                         //this.addKeyListener(playerController2);
@@ -213,17 +224,23 @@ public class GamePanel extends JPanel implements Runnable {
                     case ("AIC"):     // AI; Cactus
                         BufferedImage[][] sprMapM1 = ResourceCollection.SpriteMaps.CACTUS.getSprites();
                         Monster monster1 = new Monster(new Point2D.Float(x * 32, y * 32 - 16), sprMapM1);
-                        MonsterController monsterController1 = new MonsterController(monster1);
+                        //monster1.setMoveSpeed(1.5);
                         //this.addAI(monsterController1);
                         GameObjectCollection.spawn(monster1);
                         break;
 
                     case ("AIDR"):     // AI; Dragon
                         BufferedImage[][] sprMapM2 = ResourceCollection.SpriteMaps.DRAGON_MONSTER.getSprites();
-                        Monster monster2 = new Monster(new Point2D.Float(x * 32, y * 32 - 16), sprMapM2);
-                        MonsterController monsterController2 = new MonsterController(monster2);
+                        DragonMonster monster2 = new DragonMonster(new Point2D.Float(x * 32, y * 32 - 16), sprMapM2);
                         //this.addAI(monsterController1);
                         GameObjectCollection.spawn(monster2);
+                        break;
+
+                    case ("AIFL"):     // AI; Flame monster
+                        BufferedImage[][] sprMapM3 = ResourceCollection.SpriteMaps.FIRE_MONSTER.getSprites();
+                        FireMonster monster3 = new FireMonster(new Point2D.Float(x * 32, y * 32 - 16), sprMapM3);
+                        //this.addAI(monsterController1);
+                        GameObjectCollection.spawn(monster3);
                         break;
 
                     case ("PB"):    // Powerup Bomb
@@ -420,15 +437,17 @@ public class GamePanel extends JPanel implements Runnable {
      */
     void resetGame() {
         this.init();
+        Powerup.randomPortal = 0;
     }
 
     void nextMap() {
         if (this.gameHUD.getLevel() < 10) {
             this.gameHUD.setLevel(this.gameHUD.getLevel() + 1);
             this.resetMap(this.gameHUD.getLevel() - 1);
+            Powerup.randomPortal = 0;
         }
         else {
-            System.out.println("You win!");
+            System.out.println("You win!!!");
             this.exit();
         }
     }
@@ -437,10 +456,17 @@ public class GamePanel extends JPanel implements Runnable {
      * Reset map, điểm và level vẫn giữ. id từ 0 - 9.
      */
     private void resetMap(int id) {
-        int real_id = id % 10;
-        GameObjectCollection.init();
-        this.generateMap(real_id);
-        System.gc();
+        if (id < 10) {
+            int real_id = id % 10;
+            GameObjectCollection.init();
+            this.generateMap(real_id);
+            Powerup.randomPortal = 0;
+            System.gc();
+        }
+        else {
+            System.out.println("You win!");
+            this.exit();
+        }
     }
 
     public void addNotify() {
@@ -499,6 +525,10 @@ public class GamePanel extends JPanel implements Runnable {
      */
     private void update() throws IndexOutOfBoundsException {
         GameObjectCollection.sortBomberObjects();
+        if (monsterObjects.size() == 0 && GameObjectCollection.DragonmonsterObjects.size() == 0
+        && GameObjectCollection.FiremonsterObjects.size() == 0) {
+            Powerup.randomPortal = 2;
+        }
         // Loop through every game object arraylist
         for (int list = 0; list < GameObjectCollection.gameObjects.size(); list++) {
             for (int objIndex = 0; objIndex < GameObjectCollection.gameObjects.get(list).size(); ) {
@@ -543,13 +573,16 @@ public class GamePanel extends JPanel implements Runnable {
             boolean checkSupreme = false;
             for (Bomber bomber : GameObjectCollection.bomberObjects) {
                 if (bomber.isSupreme()) {
+                    for (Monster monster : GameObjectCollection.monsterObjects) monster.setDead();
+                    for (DragonMonster dragonMonster : GameObjectCollection.DragonmonsterObjects) dragonMonster.setDead();
+                    for (FireMonster fireMonster : GameObjectCollection.FiremonsterObjects) fireMonster.setDead();
                     checkSupreme = true;
                     break;
                 }
             }
             // ĂN PORTAL
             if (GameObjectCollection.bomberObjects.size() == 1 && checkSupreme) {
-                for (Monster monster : monsterObjects) monster.setDead();
+                Sound.play(Sound.LEVELUP, 0);
                 this.resetMap(this.gameHUD.getLevel() - 1);
                 this.gameHUD.matchSet = false;
                 System.out.println("an portal");

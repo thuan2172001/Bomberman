@@ -83,6 +83,10 @@ public class GameHUD {
                     deadPlayers++;
                 }
                 // ăn portal
+                if(this.players[i].getTempPoint() > 0) {
+                    playerScore[i] += this.players[i].getTempPoint();
+                    this.players[i].setTempPoint(0);
+                }
                 if(this.players[i].isSupreme()) {
                     for (int index = 0; index < this.players.length; index++) {
                         if (!this.players[index].isDead() && index != i) {

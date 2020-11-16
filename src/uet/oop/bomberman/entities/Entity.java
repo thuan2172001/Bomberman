@@ -169,6 +169,14 @@ interface Collidable {
 
     }
 
+    default void handleCollision(DragonMonster collidingObj) {
+
+    }
+
+    default void handleCollision(FireMonster collidingObj) {
+
+    }
+
     default void handleCollision(Bomber collidingObj) {
 
     }

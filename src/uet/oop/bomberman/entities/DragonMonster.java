@@ -3,7 +3,7 @@ package uet.oop.bomberman.entities;
 import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 
-public class Monster extends Player {
+public class DragonMonster extends Monster {
     // thuộc tính
     private boolean dead;
     private double moveSpeed;
@@ -16,8 +16,8 @@ public class Monster extends Player {
     private String typeMonster;
     private static int keyMove;
 
-    public Monster(Point2D.Float position, BufferedImage[][] spriteMap) {
-        super(position, spriteMap[1][0]);
+    public DragonMonster(Point2D.Float position, BufferedImage[][] spriteMap) {
+        super(position, spriteMap);
         this.collider.setRect(this.position.x + 3, this.position.y + 16 + 3,
                 this.width - 6, this.height - 16 - 6);
 
@@ -27,7 +27,7 @@ public class Monster extends Player {
         this.spriteIndex = 0;
         this.spriteTimer = 0;
         this.moveSpeed = 1;
-        keyMove = 1;
+        keyMove = 2;
     }
 
     public void setMoveSpeed(double moveSpeed) {
@@ -163,7 +163,9 @@ public class Monster extends Player {
         else if (keyMove == 2) {
             keyMove = 0;
         }
-        else keyMove = 1;
+        else if (keyMove == 3) {
+            keyMove = 1;
+        }
     }
 
     @Override
@@ -193,7 +195,6 @@ public class Monster extends Player {
 
     @Override
     public void handleCollision(Powerup collidingObj) {
-        this.moveSpeed++;
         collidingObj.destroy();
     }
 

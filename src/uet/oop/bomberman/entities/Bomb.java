@@ -142,6 +142,18 @@ public class Bomb extends TileObject {
     }
 
     @Override
+    public void handleCollision(FireMonster collidingObj) {
+        Point2D.Float temp = new Point2D.Float((float) this.collider.getCenterX() + this.kickDirection.getVelocity().x, (float) this.collider.getCenterY() + this.kickDirection.getVelocity().y);
+        Rectangle2D intersection = this.collider.createIntersection(collidingObj.collider);
+        if (this.kicked && intersection.contains(temp)) {
+            System.out.println("Bomb bị chặn lại");
+            this.stopKick();
+            this.solidCollision(collidingObj);
+            this.snapToGrid();
+        }
+    }
+
+    @Override
     public void handleCollision(Wall collidingObj) {
         this.solidCollision(collidingObj);
         this.stopKick();

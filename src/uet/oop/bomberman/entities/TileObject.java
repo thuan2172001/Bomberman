@@ -34,7 +34,6 @@ public abstract class TileObject extends Entity {
         this.position.setLocation(x, y);
     }
 
-
     /**
      * Xủ lí va chạm vụ nổ
      */

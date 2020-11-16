@@ -1,5 +1,7 @@
 package uet.oop.bomberman.entities;
 
+import uet.oop.bomberman.GameHUD;
+
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
@@ -27,6 +29,7 @@ public class Bomber extends Player {
     private boolean pierce;
     private boolean kick;
     private boolean supreme; // qua map luôn khi ăn portal
+    private int tempPoint;
 
     /**
      * Tạo người đặt bom ở vị trí position với hoạt ảnh là mảng 2 chiều
@@ -45,11 +48,11 @@ public class Bomber extends Player {
         this.spriteTimer = 0;
 
         // Khởi tạo mặc định
-        this.moveSpeed = 1;
+        this.moveSpeed = 2; //1
         this.firepower = 1;
         this.maxBombs = 1;
         this.bombAmmount = this.maxBombs;
-        this.bombTimer = 250;
+        this.bombTimer = 150; //250
         this.pierce = false;
         this.kick = false;
         this.supreme = false;
@@ -236,6 +239,7 @@ public class Bomber extends Player {
     @Override
     public void handleCollision(Explosion collidingObj) {
         if (!this.dead) {
+            Sound.play(Sound.DEAD, 0);
             this.dead = true;
             this.spriteIndex = 0;
         }
@@ -286,7 +290,15 @@ public class Bomber extends Player {
     @Override
     public void handleCollision(Powerup collidingObj) {
         collidingObj.grantBonus(this);
+        tempPoint += 10;
         collidingObj.destroy();
     }
 
+    public int getTempPoint() {
+        return tempPoint;
+    }
+
+    public void setTempPoint(int tempPoint) {
+        this.tempPoint = tempPoint;
+    }
 }

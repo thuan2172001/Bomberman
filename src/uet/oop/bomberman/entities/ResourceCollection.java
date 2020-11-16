@@ -49,7 +49,7 @@ public class ResourceCollection {
         BOMB_PIERCE,
         FIRE_MONSTER,
         DRAGON_MONSTER,
-        WOLF, CACTUS,
+        DRAGON_RIDER, CACTUS,
         EXPLOSION_SPRITEMAP;
 
         private BufferedImage image = null;
@@ -154,9 +154,9 @@ public class ResourceCollection {
             SpriteMaps.BOMB_PIERCE.image = ImageIO.read(ResourceCollection.class.getResource("/textures/bomb_pierce.png"));
             SpriteMaps.EXPLOSION_SPRITEMAP.image = ImageIO.read(ResourceCollection.class.getResource("/textures/explosion.png"));
             SpriteMaps.DRAGON_MONSTER.image = ImageIO.read(ResourceCollection.class.getResource("/textures/dragonMonster.png"));
-            SpriteMaps.FIRE_MONSTER.image = ImageIO.read(ResourceCollection.class.getResource("/textures/fireMonster.png"));
-            SpriteMaps.WOLF.image = ImageIO.read(ResourceCollection.class.getResource("/textures/wolf.png"));
-            SpriteMaps.CACTUS.image = ImageIO.read(ResourceCollection.class.getResource("/textures/cactus.png"));
+            SpriteMaps.FIRE_MONSTER.image = ImageIO.read(ResourceCollection.class.getResource("/textures/dragonRider.png"));
+            //SpriteMaps.DRAGON_RIDER.image = ImageIO.read(ResourceCollection.class.getResource("/textures/dragonRider.png"));
+            SpriteMaps.CACTUS.image = ImageIO.read(ResourceCollection.class.getResource("/textures/fireMonster.png"));
 
 
             Files.MAP1.file = new InputStreamReader(ResourceCollection.class.getResourceAsStream("/textures/maps/level1.csv"));
@@ -185,7 +185,6 @@ public class ResourceCollection {
         SpriteMaps.PLAYER_2.sprites = sliceSpriteMap(SpriteMaps.PLAYER_2.image, 32, 48);
         SpriteMaps.DRAGON_MONSTER.sprites = sliceSpriteMap(SpriteMaps.DRAGON_MONSTER.image, 32, 48);
         SpriteMaps.FIRE_MONSTER.sprites = sliceSpriteMap(SpriteMaps.FIRE_MONSTER.image, 32, 48);
-        SpriteMaps.WOLF.sprites = sliceSpriteMap(SpriteMaps.WOLF.image, 32, 48);
         SpriteMaps.CACTUS.sprites = sliceSpriteMap(SpriteMaps.CACTUS.image, 32, 48);
         SpriteMaps.HARD_WALLS.sprites = sliceSpriteMap(SpriteMaps.HARD_WALLS.image, 32, 32);
         SpriteMaps.BOMB.sprites = sliceSpriteMap(SpriteMaps.BOMB.image, 32, 32);

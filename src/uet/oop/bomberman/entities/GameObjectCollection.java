@@ -13,6 +13,8 @@ public class GameObjectCollection {
     public static ArrayList<Explosion> explosionObjects;
     public static ArrayList<Bomber> bomberObjects;
     public static ArrayList<Monster> monsterObjects;
+    public static ArrayList<DragonMonster> DragonmonsterObjects;
+    public static ArrayList<FireMonster> FiremonsterObjects;
 
     /**
      * Khởi tạo các mảng sẽ chứa tất cả các đối tượng trò chơi.
@@ -23,11 +25,15 @@ public class GameObjectCollection {
         explosionObjects = new ArrayList<>();
         bomberObjects = new ArrayList<>();
         monsterObjects = new ArrayList<>();
+        DragonmonsterObjects = new ArrayList<>();
+        FiremonsterObjects = new ArrayList<>();
 
         gameObjects.add(tileObjects);
         gameObjects.add(explosionObjects);
         gameObjects.add(bomberObjects);
         gameObjects.add(monsterObjects);
+        gameObjects.add(DragonmonsterObjects);
+        gameObjects.add(FiremonsterObjects);
     }
 
     /**
@@ -45,6 +51,12 @@ public class GameObjectCollection {
     }
     public static void spawn(Monster spawnObj) {
         monsterObjects.add(spawnObj);
+    }
+    public static void spawn(DragonMonster spawnObj) {
+        DragonmonsterObjects.add(spawnObj);
+    }
+    public static void spawn(FireMonster spawnObj) {
+        FiremonsterObjects.add(spawnObj);
     }
 
     /**
