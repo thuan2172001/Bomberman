@@ -16,6 +16,8 @@ LV : dung nham (không thể phá)
 TR : cây (không thể phá)
 STR: cây map băng (không thể phá)
 AIC : cactus (quái)
+AIDR : dragon (quái)
+AIFL : Flame monster (quái)
 WF : waterfall (không thể phá)
 SKE : rương kho báu (không thể phá)
 PZ 1-4 : pizza 1-4
