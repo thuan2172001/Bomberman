@@ -153,17 +153,18 @@ public class Monster extends Player {
 
     @Override
     public void handleCollision(Wall collidingObj) {
+        int keyRandom = (int) Math.round(Math.random() * 3);
         this.solidCollision(collidingObj);
         if (keyMove == 0) {
-            keyMove = 3;
+            keyMove = keyRandom;
         }
         else if (keyMove == 1) {
-            keyMove = 2;
+            keyMove = keyRandom;
         }
         else if (keyMove == 2) {
-            keyMove = 0;
+            keyMove = keyRandom;
         }
-        else keyMove = 1;
+        else keyMove = keyRandom;
     }
 
     @Override
@@ -176,18 +177,19 @@ public class Monster extends Player {
 
     @Override
     public void handleCollision(Bomb collidingObj) {
+        int keyRandom = (int) Math.round(Math.random() * 3);
         this.solidCollision(collidingObj);
         if (keyMove == 0) {
-            keyMove = 3;
+            keyMove = keyRandom;
         }
         else if (keyMove == 1) {
-            keyMove = 2;
+            keyMove = keyRandom;
         }
         else if (keyMove == 2) {
-            keyMove = 0;
+            keyMove = keyRandom;
         }
         else if (keyMove == 3) {
-            keyMove = 1;
+            keyMove = keyRandom;
         }
     }
 

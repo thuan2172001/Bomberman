@@ -158,15 +158,18 @@ public class FireMonster extends Monster {
     public void handleCollision(Wall collidingObj) {
         if (!collidingObj.isBreakable()) {
             this.solidCollision(collidingObj);
+            int keyRandom = (int) Math.round(Math.random() * 3);
+            this.solidCollision(collidingObj);
             if (keyMove == 0) {
-                keyMove = 3;
-            } else if (keyMove == 1) {
-                keyMove = 2;
-            } else if (keyMove == 2) {
-                keyMove = 0;
-            } else if (keyMove == 3) {
-                keyMove = 1;
+                keyMove = keyRandom;
             }
+            else if (keyMove == 1) {
+                keyMove = keyRandom;
+            }
+            else if (keyMove == 2) {
+                keyMove = keyRandom;
+            }
+            else keyMove = keyRandom;
         }
     }
 
@@ -180,18 +183,19 @@ public class FireMonster extends Monster {
 
     @Override
     public void handleCollision(Bomb collidingObj) {
+        int keyRandom = (int) Math.round(Math.random() * 3);
         this.solidCollision(collidingObj);
         if (keyMove == 0) {
-            keyMove = 3;
+            keyMove = keyRandom;
         }
         else if (keyMove == 1) {
-            keyMove = 2;
+            keyMove = keyRandom;
         }
         else if (keyMove == 2) {
-            keyMove = 0;
+            keyMove = keyRandom;
         }
         else if (keyMove == 3) {
-            keyMove = 1;
+            keyMove = keyRandom;
         }
     }
 

@@ -10,7 +10,7 @@ public class Sound {
     public static String DEAD = "/textures/lose.wav";
     public static String LEVELUP = "/textures/levelup.wav";
     public static String BACKGROUND = "/textures/background.wav";
-    public static String[] BACKGROUNDMUSIC = {"/textures/background.wav", "/textures/muathutrongmatem.wav"};
+    public static String[] BACKGROUNDMUSIC = {"/textures/background.wav", "/textures/background2.wav"};
 
     public static synchronized void play(final String fileName, int loop_Timer)
     {
