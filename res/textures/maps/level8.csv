@@ -1,7 +1,7 @@
 2,W,W,W,W,W,W,W,W,W,W,W,W,W,W,W,W,W,W,W,W
 W,S,S,S,S,S,S,S,S,W,S,S,S,S,S,S,S,S,-1,AIC,W
-W,S,S,S,S,S,S,S,S,W,S,S,S,S,S,S,S,S,S,-1,W
-W,S,S,S,S,S,S,S,S,W,S,S,W,S,S,W,W,S,S,S,W
+W,S,S,S,-1,S,S,-1,S,W,S,S,S,S,S,S,S,S,S,-1,W
+W,S,S,S,-1,-1,AIFL,-1,S,W,S,S,W,S,S,W,W,S,S,S,W
 W,S,S,S,S,S,S,S,S,W,S,S,W,S,S,S,W,S,S,S,W
 W,S,W,W,W,W,W,W,W,W,S,S,W,S,W,W,W,W,S,S,W
 W,S,W,S,S,S,S,S,S,W,S,S,W,S,W,S,S,S,S,S,W
@@ -13,7 +13,7 @@ W,S,W,S,W,S,S,S,S,S,S,S,S,S,S,S,W,S,S,S,W
 W,S,S,S,S,S,S,S,S,S,S,S,S,S,S,S,W,S,S,S,W
 W,S,S,,TR,S,S,S,S,S,W,W,W,W,W,S,W,S,S,S,W
 W,S,S,S,S,S,S,S,S,S,S,W,S,W,S,S,W,TR,S,S,W
-W,S,S,S,S,S,S,S,S,S,S,S,S,W,S,S,W,TR,S,S,W
+W,S,S,S,S,S,S,AIDR,S,S,S,S,S,W,S,S,W,TR,S,S,W
 W,S,S,S,S,S,W,W,W,S,S,W,S,S,S,S,W,W,S,S,W
 W,S,S,S,S,S,W,W,W,S,S,W,W,S,S,S,S,S,S,S,W
 W,-1,S,S,S,S,S,S,S,S,S,S,S,S,S,S,W,S,W,S,W
