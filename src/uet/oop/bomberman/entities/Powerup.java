@@ -9,11 +9,8 @@ import java.util.Random;
 
 public class Powerup extends TileObject {
 
-    @Override
-    protected void handleCollision(Monster monster) {
-
-    }
-
+    public static float randomPortal;
+    public static float randomStrongItem;
     public enum Type {
         //0
         // Bổ sung số lượng bomb
@@ -124,17 +121,16 @@ public class Powerup extends TileObject {
     private static Powerup.Type[] powerups = Powerup.Type.values();
     private static Random random = new Random();
     static final Powerup.Type randomPower() {
-        float randomStrongPowerUpRate = (float) Math.random();
+        randomStrongItem = (float) Math.random();
         // if(quái chết hết) return powerups[powerups.length - 1]; // tạo ra PORTAL
         // return powerups[random.nextInt(powerups.length - 1)]; // không random ra PORTAL
-        // tỉ lệ ra đồ khỏe < 0.05
-        System.out.println(randomStrongPowerUpRate);
-        if (randomStrongPowerUpRate < 0.05) {
-            float randomPortal = (float) Math.random();
+        // tỉ lệ ra đồ khỏe < 0.1
+        System.out.println(randomStrongItem);
+        if (randomStrongItem < 0.01) {
             System.out.println(randomPortal);
-            if (randomPortal < 0.5) return powerups[7];
-            else return powerups[6];
+            return powerups[6];
         }
+        else if (randomPortal == 2) return powerups[7];
         else return powerups[random.nextInt(powerups.length - 2)]; // random 0 có PORTAL và FireMax
     }
 
@@ -144,6 +140,7 @@ public class Powerup extends TileObject {
      */
     void grantBonus(Bomber bomber) {
         this.type.grantBonus(bomber);
+
     }
 
     /**

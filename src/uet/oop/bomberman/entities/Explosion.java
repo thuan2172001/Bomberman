@@ -78,10 +78,10 @@ public abstract class Explosion extends Entity {
         }
 
         /**
-         * Draws the explosionContact sprite after determining its length and center.
+         * Vẽ tương tác vụ nổ sau khi biết kích thước.
          * @param width Explosion width
          * @param height Explosion height
-         * @return Array of sprites for animation
+         * @return Một mảng ảnh (animation)
          */
         private BufferedImage[] drawSprite(int width, int height) {
             // Initialize each image in the array to be drawn to
@@ -118,10 +118,6 @@ public abstract class Explosion extends Entity {
             return spriteAnimation;
         }
 
-        @Override
-        protected void handleCollision(Monster monster) {
-
-        }
     }
 
     /**
@@ -129,12 +125,6 @@ public abstract class Explosion extends Entity {
      */
     public static class Vertical extends Explosion {
 
-        /**
-         * Constructs a horizontal explosionContact that varies in length depending on firepower and pierce.
-         * @param position Coordinates of this object in the game world
-         * @param firepower Strength of this explosionContact
-         * @param pierce Whether or not this explosionContact will pierce soft walls
-         */
         Vertical(Point2D.Float position, int firepower, boolean pierce) {
             super(position);
             // tính tọa độ nổ tối đa bên trên (độ cao vật thể -32 px)
@@ -153,11 +143,9 @@ public abstract class Explosion extends Entity {
         }
 
         /**
-         * Check for walls to determine explosionContact range. Used for top and bottom.
-         * @param position Original position of bomb prior to explosionContact
-         * @param firepower Maximum range of explosionContact
-         * @param blockHeight Size of each game object tile, negative for top, positive for bottom
-         * @return Position of the explosionContact's maximum range in vertical direction
+         * Kiểm tra tường để tìm kích thước vụ nổ.
+         * @param blockHeight Kích thước vật thể, âm cho trên, dương cho dưới
+         * @return Vị trí max theo chiều dọc
          */
         private float checkVertical(Point2D.Float position, int firepower, boolean pierce, int blockHeight) {
             float value = position.y;   // Khởi tạo tại vị trí bomb
@@ -187,10 +175,10 @@ public abstract class Explosion extends Entity {
         }
 
         /**
-         * Draws the explosionContact sprite after determining its length and center.
+         * Vẽ tương tác vụ nổ sau khi biết kích thước.
          * @param width Explosion width
          * @param height Explosion height
-         * @return Array of sprites for animation
+         * @return Một mảng ảnh (animation)
          */
         private BufferedImage[] drawSprite(int width, int height) {
             // Initialize each image in the array to be drawn to
@@ -227,10 +215,6 @@ public abstract class Explosion extends Entity {
             return spriteAnimation;
         }
 
-        @Override
-        protected void handleCollision(Monster monster) {
-
-        }
     }
 
 
@@ -243,7 +227,7 @@ public abstract class Explosion extends Entity {
     private int spriteTimer;
 
     /**
-     * Constructor called in horizontal and vertical constructors.
+     * Khởi tạo.
      * @param position Vị trí
      */
     Explosion(Point2D.Float position) {
@@ -255,8 +239,7 @@ public abstract class Explosion extends Entity {
     }
 
     /**
-     * Called later in the constructor to set collider.
-     * @param collider Collider for this to be set to
+     * Hàm để set collider.
      */
     protected void init(Rectangle2D.Float collider) {
         this.collider = collider;
@@ -265,9 +248,6 @@ public abstract class Explosion extends Entity {
         this.sprite = new BufferedImage((int) this.width, (int) this.height, BufferedImage.TYPE_INT_ARGB);
     }
 
-    /**
-     * Controls animation and destroy when it finishes
-     */
     @Override
     public void update() {
         // Animate sprite
@@ -287,10 +267,6 @@ public abstract class Explosion extends Entity {
         collidingObj.handleCollision(this);
     }
 
-    /**
-     * Draw based on the collider's position instead of this object's own position.
-     * @param g Graphics object that is passed in for the game object to draw to
-     */
     @Override
     public void drawImage(Graphics g) {
         AffineTransform rotation = AffineTransform.getTranslateInstance(this.collider.x, this.collider.y);

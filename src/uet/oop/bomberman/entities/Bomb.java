@@ -5,7 +5,7 @@ import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 
 /**
- * Bomb objects that are created by bombers.
+ * Bomb objects
  */
 public class Bomb extends TileObject {
 
@@ -90,9 +90,6 @@ public class Bomb extends TileObject {
         this.snapToGrid();
     }
 
-    /**
-     * Controls animation and detonation timer.
-     */
     @Override
     public void update() {
         this.collider.setRect(this.position.x, this.position.y, this.width, this.height);
@@ -107,12 +104,12 @@ public class Bomb extends TileObject {
         }
         this.sprite = this.sprites[0][this.spriteIndex];
 
-        // Detonate after timeToDetonate
+        // xóa bomb sau khi nổ
         if (this.timeElapsed++ >= this.timeToDetonate) {
             this.destroy();
         }
 
-        // Continue traveling when kicked
+        // Tiếp tục di chuyển khi sút
         if (this.kicked) {
             this.position.setLocation(this.position.x + this.kickDirection.getVelocity().x,
                     this.position.y + this.kickDirection.getVelocity().y);
@@ -130,16 +127,26 @@ public class Bomb extends TileObject {
     }
 
     /**
-     * Stops the bomb from moving when it encounters a bomber. Very ugly calculation to get this working so touching
-     * this code is very dangerous and can introduce bugs to the kicking logic.
-     * @param collidingObj Bomber object in the way
+     * Dừng quả bomb đang lăn khi đâm vào bomber khác
      */
     @Override
     public void handleCollision(Bomber collidingObj) {
         Point2D.Float temp = new Point2D.Float((float) this.collider.getCenterX() + this.kickDirection.getVelocity().x, (float) this.collider.getCenterY() + this.kickDirection.getVelocity().y);
         Rectangle2D intersection = this.collider.createIntersection(collidingObj.collider);
         if (this.kicked && intersection.contains(temp)) {
-            System.out.println("Stop kick called");
+            System.out.println("Bomb bị chặn lại");
+            this.stopKick();
+            this.solidCollision(collidingObj);
+            this.snapToGrid();
+        }
+    }
+
+    @Override
+    public void handleCollision(FireMonster collidingObj) {
+        Point2D.Float temp = new Point2D.Float((float) this.collider.getCenterX() + this.kickDirection.getVelocity().x, (float) this.collider.getCenterY() + this.kickDirection.getVelocity().y);
+        Rectangle2D intersection = this.collider.createIntersection(collidingObj.collider);
+        if (this.kicked && intersection.contains(temp)) {
+            System.out.println("Bomb bị chặn lại");
             this.stopKick();
             this.solidCollision(collidingObj);
             this.snapToGrid();
@@ -172,10 +179,6 @@ public class Bomb extends TileObject {
         return this.breakable;
     }
 
-    @Override
-    protected void handleCollision(Monster monster) {
-
-    }
 }
 
 /**

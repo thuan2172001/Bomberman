@@ -1,9 +1,10 @@
 package uet.oop.bomberman.entities;
 
 import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 
-public class Monster extends Player {
+public class FireMonster extends Monster {
     // thuộc tính
     private boolean dead;
     private double moveSpeed;
@@ -16,8 +17,8 @@ public class Monster extends Player {
     private String typeMonster;
     private static int keyMove;
 
-    public Monster(Point2D.Float position, BufferedImage[][] spriteMap) {
-        super(position, spriteMap[1][0]);
+    public FireMonster(Point2D.Float position, BufferedImage[][] spriteMap) {
+        super(position, spriteMap);
         this.collider.setRect(this.position.x + 3, this.position.y + 16 + 3,
                 this.width - 6, this.height - 16 - 6);
 
@@ -26,8 +27,8 @@ public class Monster extends Player {
         this.direction = 1;     // Mặc định hướng là xuống
         this.spriteIndex = 0;
         this.spriteTimer = 0;
-        this.moveSpeed = 1;
-        keyMove = 1;
+        this.moveSpeed = 2.0;
+        keyMove = 0;
     }
 
     public void setMoveSpeed(double moveSpeed) {
@@ -151,20 +152,25 @@ public class Monster extends Player {
         if(!this.dead) collidingObj.setDead();
     }
 
+
+    // đi xuyên vật thể mềm
     @Override
     public void handleCollision(Wall collidingObj) {
-        int keyRandom = (int) Math.round(Math.random() * 3);
-        this.solidCollision(collidingObj);
-        if (keyMove == 0) {
-            keyMove = keyRandom;
+        if (!collidingObj.isBreakable()) {
+            this.solidCollision(collidingObj);
+            int keyRandom = (int) Math.round(Math.random() * 3);
+            this.solidCollision(collidingObj);
+            if (keyMove == 0) {
+                keyMove = keyRandom;
+            }
+            else if (keyMove == 1) {
+                keyMove = keyRandom;
+            }
+            else if (keyMove == 2) {
+                keyMove = keyRandom;
+            }
+            else keyMove = keyRandom;
         }
-        else if (keyMove == 1) {
-            keyMove = keyRandom;
-        }
-        else if (keyMove == 2) {
-            keyMove = keyRandom;
-        }
-        else keyMove = keyRandom;
     }
 
     @Override
@@ -195,7 +201,7 @@ public class Monster extends Player {
 
     @Override
     public void handleCollision(Powerup collidingObj) {
-        this.moveSpeed++;
+        this.moveSpeed += 0.25;
         collidingObj.destroy();
     }
 

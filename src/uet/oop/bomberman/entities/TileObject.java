@@ -34,10 +34,8 @@ public abstract class TileObject extends Entity {
         this.position.setLocation(x, y);
     }
 
-
     /**
-     * First explosionContact to collide this wall will destroy this object once its animation finishes
-     * @param collidingObj First explosionContact to collide this wall
+     * Xủ lí va chạm vụ nổ
      */
     @Override
     public void handleCollision(Explosion collidingObj) {

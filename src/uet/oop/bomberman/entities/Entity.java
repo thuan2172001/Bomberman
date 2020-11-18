@@ -15,10 +15,6 @@ public abstract class Entity implements Observable, Collidable {
     float rotation;
     float width;
     float height;
-    boolean solidRight;
-    boolean solidLeft;
-    boolean solidUp;
-    boolean solidDown;
 
     // Thuộc tính bị phá hủy (Dùng để phá hủy hoạt ảnh)
     private boolean destroyed;
@@ -33,10 +29,6 @@ public abstract class Entity implements Observable, Collidable {
         this.position = new Point2D.Float(position.x, position.y);
         this.rotation = 0;
         this.collider = new Rectangle2D.Float(position.x, position.y, this.width, this.height);
-        this.solidDown = false;
-        this.solidLeft = false;
-        this.solidRight = false;
-        this.solidUp = false;
     }
 
     private Entity(BufferedImage sprite) {
@@ -64,12 +56,10 @@ public abstract class Entity implements Observable, Collidable {
             // From the top
             if (intersection.getMaxY() >= this.collider.getMaxY()) {
                 this.position.setLocation(this.position.x, this.position.y - intersection.getHeight());
-                this.solidUp = true;
             }
             // From the bottom
             if (intersection.getMaxY() >= obj.collider.getMaxY()) {
                 this.position.setLocation(this.position.x, this.position.y + intersection.getHeight());
-                this.solidDown = true;
             }
 
             // Smoothing around corners
@@ -88,12 +78,10 @@ public abstract class Entity implements Observable, Collidable {
             // From the left
             if (intersection.getMaxX() >= this.collider.getMaxX()) {
                 this.position.setLocation(this.position.x - intersection.getWidth(), this.position.y);
-                this.solidLeft = true;
             }
             // From the right
             if (intersection.getMaxX() >= obj.collider.getMaxX()) {
                 this.position.setLocation(this.position.x + intersection.getWidth(), this.position.y);
-                this.solidRight = true;
             }
 
             // Smoothing around corners
@@ -109,7 +97,7 @@ public abstract class Entity implements Observable, Collidable {
     }
 
     /**
-     * Get the rectangle collider of this game object.
+     * Nhận lại vị trí của Collider
      * @return A Rectangle2D collider
      */
     public Rectangle2D.Float getCollider() {
@@ -117,8 +105,7 @@ public abstract class Entity implements Observable, Collidable {
     }
 
     /**
-     * Get the center of the collider of this game object.
-     * @return A Point2D at the center of the collider
+     * Nhận trung tâm của object's collider
      */
     public Point2D.Float getColliderCenter() {
         return new Point2D.Float((float) this.collider.getCenterX(), (float) this.collider.getCenterY());
@@ -129,9 +116,7 @@ public abstract class Entity implements Observable, Collidable {
     }
 
     /**
-     * Draws the game object in the game world to g.
-     * (ie. the buffer which will be drawn to the screen)
-     * @param g Graphics object that is passed in for the game object to draw to
+     * Hàm vẽ một object.
      */
     public void drawImage(Graphics g) {
         AffineTransform rotation = AffineTransform.getTranslateInstance(this.position.getX(), this.position.getY());
@@ -144,24 +129,22 @@ public abstract class Entity implements Observable, Collidable {
     public int compareTo(Entity o) {
         return Float.compare(this.position.y, o.position.y);
     }
-
-    protected abstract void handleCollision(Monster monster);
 }
 
 /**
- * Observer pattern game state updating. Game objects perform certain actions based on the state of the game.
+ * interface để định hướng khả năng có thể được thấy của một thực thể.
  */
 interface Observable {
 
     /**
-     * Repeatedly called during the game loop.
+     * render lại Entity mỗi game loop.
      */
     default void update() {
 
     }
 
     /**
-     * Called when the game object gets destroyed.
+     * Gọi khi mà một thực thể bị phá hủy.
      */
     default void onDestroy() {
 
@@ -171,9 +154,7 @@ interface Observable {
 }
 
 /**
- * Visitor pattern collision handling. Blank default methods so that subclasses only need to
- * override the ones they need to avoid overriding them in every subclass only to leave them empty.
- * Not all game objects interact with every other game object.
+ * Va chạm Interface.
  */
 interface Collidable {
 
@@ -183,6 +164,18 @@ interface Collidable {
      * @param collidingObj Vật thể va chạm vào
      */
     void onCollisionEnter(Entity collidingObj);
+
+    default void handleCollision(Monster collidingObj) {
+
+    }
+
+    default void handleCollision(DragonMonster collidingObj) {
+
+    }
+
+    default void handleCollision(FireMonster collidingObj) {
+
+    }
 
     default void handleCollision(Bomber collidingObj) {
 
