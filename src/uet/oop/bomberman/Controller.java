@@ -1,6 +1,11 @@
 package uet.oop.bomberman;
 
 import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Scene;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 import uet.oop.bomberman.GamePanel;
 import uet.oop.bomberman.entities.ResourceCollection;
 import uet.oop.bomberman.entities.Sound;
@@ -8,11 +13,13 @@ import uet.oop.bomberman.entities.Sound;
 import javax.swing.*;
 import java.awt.*;
 
-public class Controller {
+public class Controller extends BombermanGame{
 
     static GameWindow window;
+    Stage guide;
 
     public void startgame() throws Exception {
+        //menu.close();
         ResourceCollection.readFiles();
         ResourceCollection.init();
         GamePanel game;
@@ -28,6 +35,26 @@ public class Controller {
 
         window = new GameWindow(game);
         System.gc();
+    }
+
+
+    public void exitgame() {
+        System.exit(0);
+
+    }
+
+    public void guidegame(javafx.event.ActionEvent actionEvent) throws Exception {
+        try {
+            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            AnchorPane root = FXMLLoader.load(getClass().getClassLoader().getResource("guide.fxml"));
+            stage.setTitle("Bomberman GGAA");
+            Scene scene = new Scene(root);
+            //scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+            stage.setScene(scene);
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
 
