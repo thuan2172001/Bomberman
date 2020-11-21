@@ -1,0 +1,355 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1624.0" prefWidth="690.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Text fill="#c319a4" fontSmoothingType="LCD" layoutX="14.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="### Mô tả về các đối tượng trong trò chơi" wrappingWidth="317.998046875">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Text>
+      <ImageView fitHeight="47.0" fitWidth="39.0" layoutX="41.0" layoutY="44.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@p1.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="39.0" fitWidth="47.0" layoutX="37.0" layoutY="116.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@dragonDefault.jpg" />
+         </image>
+      </ImageView>
+      <Text fontSmoothingType="LCD" layoutX="80.0" layoutY="64.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*Bomber* là nhân vật chính của trò chơi. Bomber có thể di chuyển theo 4 hướng trái/phải/lên/xuống theo sự điều khiển của người chơi." wrappingWidth="595.13671875">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Text>
+      <Text layoutX="80.0" layoutY="123.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*Enemy* là các đối tượng mà Bomber phải tiêu diệt hết để có thể qua Level. Enemy có thể di chuyển ngẫu nhiên hoặc tự đuổi theo Bomber tùy theo loại Enemy. Các loại Enemy sẽ được mô tả cụ thể ở phần dưới." wrappingWidth="595.1367089152336">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Text>
+      <ImageView fitHeight="37.0" fitWidth="31.0" layoutX="42.0" layoutY="181.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@bom.png" />
+         </image>
+      </ImageView>
+      <Text fontSmoothingType="LCD" layoutX="80.0" layoutY="191.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*Bomb* là đối tượng mà Bomber sẽ đặt và kích hoạt tại các ô Grass. Khi đã được kích hoạt, Bomber và Enemy không thể di chuyển vào vị trí Bomb. Tuy nhiên ngay khi Bomber vừa đặt và kích hoạt Bomb tại ví trí của mình, Bomber có một lần được đi từ vị trí đặt Bomb ra vị trí bên cạnh. Sau khi kích hoạt 2s, Bomb sẽ tự nổ, các đối tượng *Flame* được tạo ra." wrappingWidth="580.13671875">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Text>
+      <ImageView fitHeight="37.0" fitWidth="39.0" layoutX="111.0" layoutY="311.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@grass.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="37.0" fitWidth="39.0" layoutX="204.0" layoutY="311.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@snowtile.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="37.0" fitWidth="39.0" layoutX="308.0" layoutY="311.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@biscuit1.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="37.0" fitWidth="39.0" layoutX="407.0" layoutY="311.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@blocktile.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="37.0" fitWidth="39.0" layoutX="516.0" layoutY="311.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@palacetile.png" />
+         </image>
+      </ImageView>
+      <Text layoutX="61.0" layoutY="342.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Grass" wrappingWidth="38.999982476234436">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Text>
+      <Text layoutX="161.0" layoutY="343.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Snow">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Text>
+      <Text layoutX="251.0" layoutY="342.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Biscuit">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Text>
+      <Text layoutX="365.0" layoutY="342.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tile">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Text>
+      <Text layoutX="464.0" layoutY="342.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cloud">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Text>
+      <Text layoutX="26.0" layoutY="372.0" strokeType="OUTSIDE" strokeWidth="0.0" text="là đối tượng mà Bomber và Enemy có thể di chuyển xuyên qua, và cho phép đặt Bomb lên vị trí của nó" wrappingWidth="649.13671875">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Text>
+      <ImageView fitHeight="37.0" fitWidth="39.0" layoutX="111.0" layoutY="398.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@hardWall.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="37.0" fitWidth="39.0" layoutX="204.0" layoutY="398.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@water.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="37.0" fitWidth="39.0" layoutX="308.0" layoutY="398.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@lava.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="37.0" fitWidth="39.0" layoutX="407.0" layoutY="398.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@candy1.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="37.0" fitWidth="39.0" layoutX="498.0" layoutY="398.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@tree.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="37.0" fitWidth="39.0" layoutX="535.0" layoutY="398.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@snowTree.png" />
+         </image>
+      </ImageView>
+      <Text layoutX="71.0" layoutY="432.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Wall" wrappingWidth="38.999982476234436">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Text>
+      <Text layoutX="158.0" layoutY="432.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Water" wrappingWidth="38.999982476234436">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Text>
+      <Text layoutX="263.0" layoutY="432.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Lava" wrappingWidth="38.999982476234436">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Text>
+      <Text layoutX="356.0" layoutY="432.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Candy" wrappingWidth="38.999982476234436">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Text>
+      <Text layoutX="459.0" layoutY="432.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tree" wrappingWidth="38.999982476234436">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Text>
+      <Text layoutX="579.0" layoutY="432.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pizza" wrappingWidth="38.999982476234436">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Text>
+      <ImageView fitHeight="37.0" fitWidth="39.0" layoutX="618.0" layoutY="399.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@pizza1.png" />
+         </image>
+      </ImageView>
+      <Text layoutX="26.0" layoutY="461.0" strokeType="OUTSIDE" strokeWidth="0.0" text="là đối tượng cố định, không thể phá hủy bằng Bomb cũng như không thể đặt Bomb lên được, Bomber và Enemy không thể di chuyển vào đối tượng này" wrappingWidth="649.13671875">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Text>
+      <ImageView fitHeight="37.0" fitWidth="39.0" layoutX="110.0" layoutY="496.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@box1.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="37.0" fitWidth="39.0" layoutX="147.0" layoutY="496.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@box3.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="37.0" fitWidth="39.0" layoutX="187.0" layoutY="496.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@box2.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="37.0" fitWidth="39.0" layoutX="224.0" layoutY="496.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@box4.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="37.0" fitWidth="39.0" layoutX="263.0" layoutY="496.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@box5.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="37.0" fitWidth="39.0" layoutX="300.0" layoutY="496.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@box6.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="37.0" fitWidth="39.0" layoutX="337.0" layoutY="496.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@box7.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="37.0" fitWidth="39.0" layoutX="374.0" layoutY="496.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@box8.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="37.0" fitWidth="39.0" layoutX="414.0" layoutY="496.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@food0.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="37.0" fitWidth="39.0" layoutX="451.0" layoutY="496.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@food1.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="37.0" fitWidth="39.0" layoutX="490.0" layoutY="496.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@food2.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="37.0" fitWidth="39.0" layoutX="527.0" layoutY="496.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@food3.png" />
+         </image>
+      </ImageView>
+      <Text layoutX="71.0" layoutY="530.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Box" wrappingWidth="38.999982476234436">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Text>
+      <Text layoutX="26.0" layoutY="557.0" strokeType="OUTSIDE" strokeWidth="0.0" text="là đối tượng được đặt lên các ô Grass, không cho phép đặt Bomb lên nhưng có thể bị phá hủy bởi Bomb được đặt gần đó. Bomber và Enemy thông thường không thể di chuyển vào vị trí Brick khi nó chưa bị phá hủy." wrappingWidth="649.13671875">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Text>
+      <Text layoutX="81.0" layoutY="640.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*Portal* là đối tượng được giấu phía sau một đối tượng Brick. Khi Brick đó bị phá hủy, Portal sẽ hiện ra ngẫu nhiên với tỉ lệ thấp" wrappingWidth="586.13671875">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Text>
+      <ImageView fitHeight="37.0" fitWidth="39.0" layoutX="38.0" layoutY="627.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@portal.png" />
+         </image>
+      </ImageView>
+      <Text fill="#e08410" layoutX="30.0" layoutY="695.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Bạn sẽ qua màn nếu bạn đi qua portal hoặc nếu tất cả Enemy đã bị tiêu diệt" wrappingWidth="640.13671875">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Text>
+      <Text fill="#1261de" layoutX="30.0" layoutY="722.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Các item sau khi phá hủy brick" wrappingWidth="640.13671875">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Text>
+      <ImageView fitHeight="37.0" fitWidth="34.0" layoutX="18.0" layoutY="742.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@power_speed.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="37.0" fitWidth="34.0" layoutX="18.0" layoutY="776.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@power_firemax.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="37.0" fitWidth="34.0" layoutX="18.0" layoutY="818.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@power_bomb.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="37.0" fitWidth="34.0" layoutX="18.0" layoutY="852.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@power_kick.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="37.0" fitWidth="34.0" layoutX="18.0" layoutY="886.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@power_pierce.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="37.0" fitWidth="34.0" layoutX="18.0" layoutY="927.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@power_timer.png" />
+         </image>
+      </ImageView>
+      <TextArea layoutX="54.0" layoutY="728.0" prefHeight="260.0" prefWidth="627.0" text="*SpeedItem* Khi sử dụng Item này, Bomber sẽ được tăng vận tốc di chuyển thêm một giá trị thích hợp&#10;&#10;*FlameItem* Item này giúp tăng phạm vi ảnh hưởng của Bomb khi nổ (độ dài các Flame lớn hơn)&#10;&#10;*BombItem* Item này giúp tăng số lượng Bomb có thể đặt thêm một.&#10;&#10;*KickItem* Giúp Bomber có khả năng đá bomb đi xa.&#10;&#10;*PiereItem* Tăng khẳ năng đâm xuyên của bomb, xuyên các vật thể mềm (BOX).&#10;&#10;*TimeItem* Giảm thời gian bomb nổ.&#10;&#10;&#10;&#10;&#10;&#10;">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </TextArea>
+      <Text fill="#1261de" layoutX="35.0" layoutY="1009.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Các  loại quái vật" wrappingWidth="640.13671875">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Text>
+      <ImageView fitHeight="37.0" fitWidth="34.0" layoutX="18.0" layoutY="1026.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@dragonDefault.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="34.0" fitWidth="34.0" layoutX="21.0" layoutY="1091.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@cactusDefault.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="37.0" fitWidth="34.0" layoutX="20.0" layoutY="1142.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@fireMonsterDefault.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="37.0" fitWidth="34.0" layoutX="21.0" layoutY="1193.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@dragonRiderDefault.png" />
+         </image>
+      </ImageView>
+      <Text layoutX="62.0" layoutY="1039.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*Dragon* là Enemy đơn giản nhất, di chuyển với vận tốc cố định bằng vận tốc bomber, có thể phá item trên đường điượng mà Bomber và Enemy có thể di chuyển xuyên qua, và cho phép đặt Bomb lên vị trí của nó" wrappingWidth="615.13671875">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Text>
+      <Text layoutX="62.0" layoutY="1106.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*Cactus* là Enemy có sức mạnh trung bình, ban đầu di chuyển chậm nhưng có khả năng ăn item để tăng tốc độ" wrappingWidth="615.13671875">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Text>
+      <Text layoutX="62.0" layoutY="1157.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*FireMonster* là Enemy mạnh, có tốc độ di chuyển nhanh, có khả năng ăn item để tăng tốc độ của mình" wrappingWidth="615.13671875">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Text>
+      <Text layoutX="62.0" layoutY="1208.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*DragonRider* là Enemy có sức mạnh khủng khiếp, tốc độ di chuyển nhanh và có khả năng đi SĂN bomber" wrappingWidth="615.13671875">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Text>
+      <Text fill="#c319a4" fontSmoothingType="LCD" layoutX="26.0" layoutY="1264.0" strokeType="OUTSIDE" strokeWidth="0.0" text="## Mô tả game play, xử lý va chạm và xử lý bom nổ" wrappingWidth="373.998046875">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Text>
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+      <TextArea layoutX="9.0" layoutY="1275.0" prefHeight="335.0" prefWidth="672.0" text="- Trong một màn chơi, Bomber sẽ được người chơi di chuyển, đặt và kích hoạt Bomb với mục tiêu chính là tiêu &#10;diệt tất cả Enemy hoặc tìm ra Portal để có thể qua màn mới&#10;- Bomber sẽ bị giết khi va chạm với Enemy hoặc thuộc phạm vi Bomb nổ. Lúc đấy trò chơi kết thúc.&#10;- Enemy bị tiêu diệt khi thuộc phạm vi Bomb nổ&#10;- Một đối tượng thuộc phạm vi Bomb nổ có nghĩa là đối tượng đó va chạm với một trong các tia lửa được tạo&#10; ra tại thời điểm một đối tượng Bomb nổ.&#10;&#10;- Khi Bomb nổ, một Flame trung tâm tại vị trí Bomb nổ và bốn Flame tại bốn vị trí ô đơn vị xung quanh vị trí &#10;của Bomb xuất hiện theo bốn hướng trên/dưới/trái/phải. Độ dài bốn Flame xung quanh mặc định là 1 đơn vị, &#10;được tăng lên khi Bomber sử dụng các FlameItem.&#10;- Khi các Flame xuất hiện, nếu có một đối tượng thuộc loại Box/Wall nằm trên vị trí một trong các Flame thì độ &#10;dài Flame đó sẽ được giảm đi để sao cho Flame chỉ xuất hiện đến vị trí đối tượng Box/Wall theo hướng xuất&#10; hiện. Lúc đó chỉ có đối tượng Box/Wall bị ảnh hưởng bởi Flame, các đối tượng tiếp theo không bị ảnh hưởng. &#10;Còn nếu vật cản Flame là một đối tượng Bomb khác thì đối tượng Bomb đó cũng sẽ nổ ngay lập tức.&#10;- Trong trường hợp bomb của bạn có khả năng đâm xuyên cực mạnh (PierceItem) thì nó sẽ đâm thủng qua &#10;các Box nhưng vẫn không thể xuyên qua Wall&#10;- Có tổng cộng 10 màn chơi, nếu vượt qua màn 10, bạn sẽ chiến thắng tựa game này">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </TextArea>
+   </children>
+</AnchorPane>
