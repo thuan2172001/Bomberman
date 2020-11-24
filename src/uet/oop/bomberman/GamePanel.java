@@ -54,6 +54,7 @@ public class GamePanel extends JPanel implements Runnable {
     private HashMap<Integer, Key> controls2;
 
     private int keyGen;
+    private boolean winning;
 
     private static final double SOFTWALL_RATE = 0.5;
 
@@ -102,6 +103,7 @@ public class GamePanel extends JPanel implements Runnable {
         this.setPreferredSize(new Dimension(this.mapWidth * 32, (this.mapHeight * 32) + GameWindow.HUD_HEIGHT));
         System.gc();
         this.running = true;
+        this.winning = false;
     }
 
     /**
@@ -236,9 +238,9 @@ public class GamePanel extends JPanel implements Runnable {
                         GameObjectCollection.spawn(monster2);
                         break;
 
-                    case ("AIFL"):     // AI; Flame monster
-                        BufferedImage[][] sprMapM3 = ResourceCollection.SpriteMaps.FIRE_MONSTER.getSprites();
-                        FireMonster monster3 = new FireMonster(new Point2D.Float(x * 32, y * 32 - 16), sprMapM3);
+                    case ("AIFL"):     // AI; Fly monster
+                        BufferedImage[][] sprMapM3 = ResourceCollection.SpriteMaps.FLY_MONSTER.getSprites();
+                        DragonRiderMonster monster3 = new DragonRiderMonster(new Point2D.Float(x * 32, y * 32 - 16), sprMapM3);
                         //this.addAI(monsterController1);
                         GameObjectCollection.spawn(monster3);
                         break;
@@ -449,6 +451,9 @@ public class GamePanel extends JPanel implements Runnable {
         else {
             System.out.println("You win!!!");
             this.exit();
+            this.winning = true;
+            new WinningWindow();
+            System.gc();
         }
     }
 
@@ -466,6 +471,9 @@ public class GamePanel extends JPanel implements Runnable {
         else {
             System.out.println("You win!");
             this.exit();
+            this.winning = true;
+            new WinningWindow();
+            System.gc();
         }
     }
 
@@ -514,6 +522,16 @@ public class GamePanel extends JPanel implements Runnable {
             }
         }
 
+        while(!this.running && this.winning) {
+            System.out.println("winning....");
+            Sound.play(Sound.LEVELUP, 0);
+            try {
+                Thread.sleep(5000);
+                this.winning = false;
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
         System.exit(0);
     }
 
@@ -575,7 +593,7 @@ public class GamePanel extends JPanel implements Runnable {
                 if (bomber.isSupreme()) {
                     for (Monster monster : GameObjectCollection.monsterObjects) monster.setDead();
                     for (DragonMonster dragonMonster : GameObjectCollection.DragonmonsterObjects) dragonMonster.setDead();
-                    for (FireMonster fireMonster : GameObjectCollection.FiremonsterObjects) fireMonster.setDead();
+                    for (DragonRiderMonster dragonRiderMonster : GameObjectCollection.FiremonsterObjects) dragonRiderMonster.setDead();
                     checkSupreme = true;
                     break;
                 }
@@ -737,4 +755,35 @@ class GameController implements KeyListener {
     public void keyReleased(KeyEvent e) {
     }
 
+}
+
+class WinningWindow extends JFrame {
+    JPanel contentPane;
+    JLabel imageLabel = new JLabel();
+    JLabel headerLabel = new JLabel();
+
+    public WinningWindow() {
+        try {
+            setDefaultCloseOperation(EXIT_ON_CLOSE);
+            contentPane = (JPanel) getContentPane();
+            contentPane.setLayout(new BorderLayout());
+            setSize(new Dimension(690, 760));
+            setTitle("Bomberman Game!");
+            // add the header label
+            headerLabel.setFont(new java.awt.Font("Comic Sans MS", Font.BOLD, 30));
+            headerLabel.setText("           Congratulation! You win !!!");
+            contentPane.add(headerLabel, java.awt.BorderLayout.NORTH);
+            // add the image label
+            ImageIcon ii = new ImageIcon(this.getClass().getResource(
+                    "/textures/winning.gif"));
+
+            imageLabel.setIcon(ii);
+            contentPane.add(imageLabel, java.awt.BorderLayout.CENTER);
+            // show it
+            this.setLocationRelativeTo(null);
+            this.setVisible(true);
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
+    }
 }

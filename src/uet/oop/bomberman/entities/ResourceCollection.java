@@ -43,11 +43,10 @@ public class ResourceCollection {
     public enum SpriteMaps {
         PLAYER_1,
         PLAYER_2,
-        WATER_FALL,
         HARD_WALLS,
         BOMB,
         BOMB_PIERCE,
-        FIRE_MONSTER,
+        FLY_MONSTER,
         DRAGON_MONSTER,
         DRAGON_RIDER, CACTUS,
         EXPLOSION_SPRITEMAP;
@@ -149,12 +148,11 @@ public class ResourceCollection {
             SpriteMaps.PLAYER_1.image = ImageIO.read(ResourceCollection.class.getResource("/textures/bomber1.png"));
             SpriteMaps.PLAYER_2.image = ImageIO.read(ResourceCollection.class.getResource("/textures/bomber2.png"));
             SpriteMaps.HARD_WALLS.image = ImageIO.read(ResourceCollection.class.getResource("/textures/hardWalls.png"));
-            SpriteMaps.WATER_FALL.image = ImageIO.read(ResourceCollection.class.getResource("/textures/waterFall.png"));
             SpriteMaps.BOMB.image = ImageIO.read(ResourceCollection.class.getResource("/textures/bomb.png"));
             SpriteMaps.BOMB_PIERCE.image = ImageIO.read(ResourceCollection.class.getResource("/textures/bomb_pierce.png"));
             SpriteMaps.EXPLOSION_SPRITEMAP.image = ImageIO.read(ResourceCollection.class.getResource("/textures/explosion.png"));
             SpriteMaps.DRAGON_MONSTER.image = ImageIO.read(ResourceCollection.class.getResource("/textures/dragonMonster.png"));
-            SpriteMaps.FIRE_MONSTER.image = ImageIO.read(ResourceCollection.class.getResource("/textures/dragonRider.png"));
+            SpriteMaps.FLY_MONSTER.image = ImageIO.read(ResourceCollection.class.getResource("/textures/dragonRider.png"));
             //SpriteMaps.DRAGON_RIDER.image = ImageIO.read(ResourceCollection.class.getResource("/textures/dragonRider.png"));
             SpriteMaps.CACTUS.image = ImageIO.read(ResourceCollection.class.getResource("/textures/fireMonster.png"));
 
@@ -184,7 +182,7 @@ public class ResourceCollection {
         SpriteMaps.PLAYER_1.sprites = sliceSpriteMap(SpriteMaps.PLAYER_1.image, 32, 48);
         SpriteMaps.PLAYER_2.sprites = sliceSpriteMap(SpriteMaps.PLAYER_2.image, 32, 48);
         SpriteMaps.DRAGON_MONSTER.sprites = sliceSpriteMap(SpriteMaps.DRAGON_MONSTER.image, 32, 48);
-        SpriteMaps.FIRE_MONSTER.sprites = sliceSpriteMap(SpriteMaps.FIRE_MONSTER.image, 32, 48);
+        SpriteMaps.FLY_MONSTER.sprites = sliceSpriteMap(SpriteMaps.FLY_MONSTER.image, 32, 48);
         SpriteMaps.CACTUS.sprites = sliceSpriteMap(SpriteMaps.CACTUS.image, 32, 48);
         SpriteMaps.HARD_WALLS.sprites = sliceSpriteMap(SpriteMaps.HARD_WALLS.image, 32, 32);
         SpriteMaps.BOMB.sprites = sliceSpriteMap(SpriteMaps.BOMB.image, 32, 32);

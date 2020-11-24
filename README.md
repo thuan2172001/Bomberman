@@ -27,7 +27,6 @@ Các *Item* cũng được giấu phía sau Brick và chỉ hiện ra khi Brick 
 
 Có nhiều loại Enemy trong Bomberman, tuy nhiên trong phiên bản này chỉ yêu cầu cài đặt hai loại Enemy dưới đây (nếu cài đặt thêm các loại khác sẽ được cộng thêm điểm):
 - ![](res/textures/dragonDefault.jpg) *Dragon* là Enemy đơn giản nhất, di chuyển với vận tốc cố định bằng vận tốc bomber, có thể phá item trên đường đi
-- ![](res/textures/cactusDefault.png) *Cactus* là Enemy có sức mạnh trung bình, ban đầu di chuyển chậm nhưng có khả năng ăn item để tăng tốc độ
 - ![](res/textures/fireMonsterDefault.png) *FireMonster* là Enemy mạnh, có tốc độ di chuyển nhanh, có khả năng ăn item để tăng tốc độ của mình
 - ![](res/textures/dragonRiderDefault.png) *DragonRider* là Enemy có sức mạnh khủng khiếp, tốc độ di chuyển nhanh và có khả năng đi SĂN bomber
 

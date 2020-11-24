@@ -173,7 +173,7 @@ interface Collidable {
 
     }
 
-    default void handleCollision(FireMonster collidingObj) {
+    default void handleCollision(DragonRiderMonster collidingObj) {
 
     }
 

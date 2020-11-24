@@ -126,7 +126,7 @@ public class Powerup extends TileObject {
         // return powerups[random.nextInt(powerups.length - 1)]; // không random ra PORTAL
         // tỉ lệ ra đồ khỏe < 0.1
         System.out.println(randomStrongItem);
-        if (randomStrongItem < 0.01) {
+        if (randomStrongItem < 0.006) {
             System.out.println(randomPortal);
             return powerups[6];
         }

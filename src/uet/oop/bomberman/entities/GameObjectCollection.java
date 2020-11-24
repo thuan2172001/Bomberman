@@ -14,7 +14,7 @@ public class GameObjectCollection {
     public static ArrayList<Bomber> bomberObjects;
     public static ArrayList<Monster> monsterObjects;
     public static ArrayList<DragonMonster> DragonmonsterObjects;
-    public static ArrayList<FireMonster> FiremonsterObjects;
+    public static ArrayList<DragonRiderMonster> FiremonsterObjects;
 
     /**
      * Khởi tạo các mảng sẽ chứa tất cả các đối tượng trò chơi.
@@ -55,7 +55,7 @@ public class GameObjectCollection {
     public static void spawn(DragonMonster spawnObj) {
         DragonmonsterObjects.add(spawnObj);
     }
-    public static void spawn(FireMonster spawnObj) {
+    public static void spawn(DragonRiderMonster spawnObj) {
         FiremonsterObjects.add(spawnObj);
     }
 

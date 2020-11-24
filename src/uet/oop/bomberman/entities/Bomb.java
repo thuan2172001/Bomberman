@@ -142,7 +142,7 @@ public class Bomb extends TileObject {
     }
 
     @Override
-    public void handleCollision(FireMonster collidingObj) {
+    public void handleCollision(DragonRiderMonster collidingObj) {
         Point2D.Float temp = new Point2D.Float((float) this.collider.getCenterX() + this.kickDirection.getVelocity().x, (float) this.collider.getCenterY() + this.kickDirection.getVelocity().y);
         Rectangle2D intersection = this.collider.createIntersection(collidingObj.collider);
         if (this.kicked && intersection.contains(temp)) {
